@@ -1,0 +1,4602 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>游泳成績語音記錄系統</title>
+  <style>
+    :root {
+      /* Base (Splash Party - cartoon) */
+      --bg: #fff9f0;
+      --panel: #ffffff;
+      --ink: #3a2a20;
+      --muted: #b08880;
+      --line: #ffe0d0;
+      --accent: #ff6b9d;
+      --accent-soft: #fff0f6;
+      --warn: #ffd93d;
+      --bad: #e05050;
+      --good: #28a860;
+      --hero-dark: #1a0a14;
+      --hero-water: #4dc8f0;
+      --hero-light: rgba(160,230,255,.85);
+      --save: #4dc8f0;
+      --rank: #ffd93d;
+      --secondary-bg: #fff0e8;
+      --btn-voice-bg: linear-gradient(135deg, #28dccd 0%, #1fbde2 55%, #1da8ec 100%);
+      --btn-voice-color: #fff;
+      --btn-parse-bg: linear-gradient(180deg, #f7d75b 0%, #f6d14b 55%, #f3c93b 100%);
+      --btn-parse-color: #7a5200;
+      --btn-stop-bg: linear-gradient(180deg, #ff6158 0%, #ff4e45 55%, #ff3f3c 100%);
+      --btn-stop-color: #fff;
+      --btn-clear-bg: linear-gradient(180deg, #f5efe8 0%, #f3ece5 55%, #efe8df 100%);
+      --btn-clear-color: #ef7709;
+      --btn-focus-bg: linear-gradient(180deg, #d7eeee 0%, #d0e9e9 55%, #c9e3e3 100%);
+      --btn-focus-color: #129ea0;
+      --btn-example-bg: linear-gradient(180deg, #d5ebf8 0%, #cde6f6 55%, #c6e1f3 100%);
+      --btn-example-color: #1684d8;
+      --header-grad: linear-gradient(160deg,#4dc8f0,#7be6a0,#4dc8f0);
+      --header-text: #1a4a2e;
+      --header-sub: #2d7a50;
+      --rank1-bg: #ff6b9d; --rank1-color: #fff;
+      --rank2-bg: #ffd93d; --rank2-color: #7a5200;
+      --rank3-bg: #a8edea; --rank3-color: #1a5a58;
+      --rank4-bg: #e0e0e0; --rank4-color: #666;
+      --pb-border: #ff6b9d;
+      --pb-text: #cc4477;
+      --live-bg: #ff6b9d;
+      --live-text: #fff;
+      --detail-btn-color: #cc4477;
+      --theme-border-radius: 12px;
+      --theme-font: "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    /* ── Splash Party (cartoon) ── already set in :root above ── */
+
+    /* ── Morning Mist (soft) ── */
+    body[data-theme="mist"] {
+      --bg: #f5eff8;
+      --panel: #fefcff;
+      --ink: #3d2a5a;
+      --muted: #9a88b0;
+      --line: #e8dff0;
+      --accent: #8b6dbd;
+      --accent-soft: #f0eaf8;
+      --warn: #e88baa;
+      --bad: #c05a80;
+      --good: #5a8a6a;
+      --hero-dark: #1a0a2e;
+      --hero-water: #b090e0;
+      --hero-light: rgba(200,180,255,.8);
+      --save: #e88baa;
+      --rank: #e8c8d8;
+      --secondary-bg: #f0eaf8;
+      --btn-voice-bg: #8457f0;
+      --btn-voice-color: #fff;
+      --btn-parse-bg: #4f72f0;
+      --btn-parse-color: #fff;
+      --btn-stop-bg: #ff4040;
+      --btn-stop-color: #fff;
+      --btn-clear-bg: #e4dcef;
+      --btn-clear-color: #806d91;
+      --btn-focus-bg: #d9ebff;
+      --btn-focus-color: #2f5e86;
+      --btn-example-bg: #f4d3e1;
+      --btn-example-color: #8a3f60;
+      --header-grad: linear-gradient(160deg,#e8d5f5,#d5eaf5,#e8d5f5);
+      --header-text: #3d2a5a;
+      --header-sub: #7a5a9a;
+      --rank1-bg: #8b6dbd; --rank1-color: #fff;
+      --rank2-bg: #e88baa; --rank2-color: #fff;
+      --rank3-bg: #b0d0e8; --rank3-color: #2a5a7a;
+      --rank4-bg: #e8dff0; --rank4-color: #7a6890;
+      --pb-border: #e88baa;
+      --pb-text: #c05a80;
+      --live-bg: #8b6dbd;
+      --live-text: #fff;
+      --detail-btn-color: #c05a80;
+      --theme-border-radius: 10px;
+    }
+
+    /* ── Ice Speed ── */
+    body[data-theme="ice"] {
+      --bg: #060d1a;
+      --panel: #0a1020;
+      --ink: #e0f4ff;
+      --muted: #4a6880;
+      --line: #162038;
+      --accent: #00d4ff;
+      --accent-soft: #001a22;
+      --warn: #0a60ff;
+      --bad: #ff5050;
+      --good: #00d4aa;
+      --hero-dark: #020810;
+      --hero-water: #00a0d0;
+      --hero-light: rgba(0,200,255,.6);
+      --save: #0a60ff;
+      --rank: #00d4ff;
+      --secondary-bg: #101828;
+      --btn-voice-bg: #00d4ff;
+      --btn-voice-color: #001a22;
+      --btn-parse-bg: #145cff;
+      --btn-parse-color: #fff;
+      --btn-stop-bg: #ff3030;
+      --btn-stop-color: #fff;
+      --btn-clear-bg: #1b2538;
+      --btn-clear-color: #93a8bd;
+      --btn-focus-bg: #28445d;
+      --btn-focus-color: #b9e6ff;
+      --btn-example-bg: #006f8f;
+      --btn-example-color: #e8fbff;
+      --header-grad: linear-gradient(160deg,#060d1a,#0c1630,#060d1a);
+      --header-text: #ffffff;
+      --header-sub: #6a9acc;
+      --rank1-bg: #00d4ff; --rank1-color: #001a22;
+      --rank2-bg: #0a60ff; --rank2-color: #fff;
+      --rank3-bg: #162038; --rank3-color: #6a9acc;
+      --rank4-bg: #0d1828; --rank4-color: #4a6880;
+      --pb-border: #0a60ff;
+      --pb-text: #00d4ff;
+      --live-bg: #00d4ff;
+      --live-text: #001a22;
+      --detail-btn-color: #00d4ff;
+      --theme-border-radius: 6px;
+    }
+
+    /* ── Deep Amber ── */
+    body[data-theme="amber"] {
+      --bg: #070a14;
+      --panel: #0d1020;
+      --ink: #d0e4f8;
+      --muted: #506078;
+      --line: #182038;
+      --accent: #e89820;
+      --accent-soft: #2a1c08;
+      --warn: #c87810;
+      --bad: #e05050;
+      --good: #28a870;
+      --hero-dark: #020508;
+      --hero-water: #b07010;
+      --hero-light: rgba(220,160,30,.5);
+      --save: #e89820;
+      --rank: #c87810;
+      --secondary-bg: #101828;
+      --btn-voice-bg: #f59e0b;
+      --btn-voice-color: #fff8e0;
+      --btn-parse-bg: #b86a00;
+      --btn-parse-color: #fff8e0;
+      --btn-stop-bg: #ff3333;
+      --btn-stop-color: #fff;
+      --btn-clear-bg: #1f2937;
+      --btn-clear-color: #a7b0bf;
+      --btn-focus-bg: #7c4a16;
+      --btn-focus-color: #fff0d0;
+      --btn-example-bg: #d89b2b;
+      --btn-example-color: #1a1000;
+      --header-grad: linear-gradient(160deg,#070a14,#0e1428,#070a14);
+      --header-text: #f0c870;
+      --header-sub: #806830;
+      --rank1-bg: #e89820; --rank1-color: #1a1000;
+      --rank2-bg: #c87810; --rank2-color: #fff8e0;
+      --rank3-bg: #182038; --rank3-color: #6a9acc;
+      --rank4-bg: #101828; --rank4-color: #506078;
+      --pb-border: #c87810;
+      --pb-text: #e89820;
+      --live-bg: #c87810;
+      --live-text: #fff8e0;
+      --detail-btn-color: #e89820;
+      --theme-border-radius: 6px;
+    }
+
+    /* ── Rainbow Bunny ── */
+    body[data-theme="bunny"] {
+      --bg: #fff0f8;
+      --panel: #ffffff;
+      --ink: #3a1a40;
+      --muted: #c098b8;
+      --line: #f0d8f0;
+      --accent: #ff6b9d;
+      --accent-soft: #fff0f8;
+      --warn: #ffd93d;
+      --bad: #e05050;
+      --good: #28b888;
+      --hero-dark: #1a0820;
+      --hero-water: #ff9ad0;
+      --hero-light: rgba(255,180,220,.7);
+      --save: #a78bfa;
+      --rank: #ffd93d;
+      --secondary-bg: #fff0f8;
+      --btn-voice-bg: #4f72f0;
+      --btn-voice-color: #fff;
+      --btn-parse-bg: #8657ec;
+      --btn-parse-color: #fff;
+      --btn-stop-bg: #ff3b3b;
+      --btn-stop-color: #fff;
+      --btn-clear-bg: #fde68a;
+      --btn-clear-color: #6f3c00;
+      --btn-focus-bg: #b8f3cf;
+      --btn-focus-color: #075f4b;
+      --btn-example-bg: #b9dcff;
+      --btn-example-color: #173f72;
+      --header-grad: linear-gradient(135deg,#ffb3d1,#ffcba4,#fff4a3,#b3f0d1,#b3d9ff,#d4b3ff);
+      --header-text: #5a1a4a;
+      --header-sub: #a04080;
+      --rank1-bg: #ff6b9d; --rank1-color: #fff;
+      --rank2-bg: #a78bfa; --rank2-color: #fff;
+      --rank3-bg: #6ee7b7; --rank3-color: #065f46;
+      --rank4-bg: #fde68a; --rank4-color: #78350f;
+      --pb-border: #ff6b9d;
+      --pb-text: #cc4477;
+      --live-bg: linear-gradient(90deg,#ff6b9d,#f9a825,#43a047,#1e88e5,#8e24aa);
+      --live-text: #fff;
+      --detail-btn-color: #a78bfa;
+      --theme-border-radius: 16px;
+    }
+
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    header {
+      min-height: 230px;
+      width: 100vw;
+      max-width: 100vw;
+      padding: 22px 20px 18px;
+      background: var(--header-grad, linear-gradient(160deg,#4dc8f0,#7be6a0,#4dc8f0));
+      color: var(--header-text, #1a4a2e);
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    header::before, header::after { display: none; }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 190px;
+      max-width: 720px;
+      padding-top: 48px;
+    }
+
+    .settings-menu {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      right: auto;
+      z-index: 50;
+    }
+
+    .settings-toggle {
+      border: 1px solid rgba(255,255,255,.24);
+      border-radius: 999px;
+      min-height: 36px;
+      min-width: 62px;
+      padding: 8px 13px;
+      background: rgba(0, 19, 29, .56);
+      color: #fff;
+      text-align: center;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+    }
+
+    .settings-panel[hidden] { display: none; }
+
+    .settings-panel {
+      position: fixed;
+      top: 66px;
+      left: 20px;
+      width: 180px;
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
+      background: rgba(2, 13, 20, .86);
+      box-shadow: 0 18px 40px rgba(0,0,0,.32);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+    }
+
+    .settings-panel button {
+      min-height: 36px;
+      padding: 8px 11px;
+      border: 1px solid rgba(255,255,255,.24);
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      backdrop-filter: blur(10px);
+    }
+
+    .settings-panel button.active {
+      background: rgba(255,255,255,.88);
+      color: #0a2b34;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(48px, 8vw, 92px);
+      letter-spacing: .6px;
+      line-height: 1.05;
+      font-weight: 950;
+      font-style: italic;
+      color: var(--header-text, #1a4a2e);
+      text-shadow: 0 2px 12px rgba(0,0,0,.2);
+    }
+
+    .hero-subtitle {
+      margin-top: 9px;
+      font-size: 22px;
+      font-weight: 850;
+      opacity: .85;
+      max-width: 560px;
+      color: var(--header-sub, #2d7a50);
+    }
+
+    main {
+      padding: 18px 24px 28px;
+      display: grid;
+      grid-template-columns: minmax(360px, 460px) minmax(0, 1fr);
+      align-items: start;
+      gap: 16px;
+      width: min(1280px, 100vw);
+      margin: 0 auto;
+    }
+
+    main > div { display: contents; }
+    .input-section { order: 1; grid-column: 1; }
+    .floating-settings { order: 2; grid-column: 1; }
+    .manual-section { order: 3; grid-column: 1; }
+    .summary-section { order: 5; grid-column: 2; grid-row: 1 / span 4; }
+    .snapshot-section { order: 6; grid-column: 1 / -1; }
+    .raw-section { order: 7; grid-column: 1 / -1; }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, .08);
+    }
+
+    .section-title {
+      padding: 12px 14px;
+      background: var(--accent-soft);
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .body { padding: 14px; }
+
+    .floating-settings {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: -2px 4px 12px;
+      align-items: start;
+      position: relative;
+      z-index: 3;
+    }
+
+    .floating-panel {
+      position: relative;
+      overflow: visible;
+    }
+
+    .floating-panel summary {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 850;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
+      padding: 0 8px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .floating-panel summary::-webkit-details-marker { display: none; }
+
+    .floating-panel[open] {
+      grid-column: 1 / -1;
+    }
+
+    .floating-panel[open] summary {
+      border-color: color-mix(in srgb, var(--accent), white 30%);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .floating-body {
+      margin-top: 10px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--ink);
+      box-shadow: 0 18px 42px rgba(0,0,0,.12);
+    }
+
+    .floating-body textarea { min-height: 150px; }
+
+    .floating-body .button-row { position: static; }
+
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 10px 11px;
+      font: inherit;
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    textarea {
+      min-height: 250px;
+      line-height: 1.65;
+      resize: vertical;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 8px 0 0;
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .settings-action-row {
+      grid-template-columns: 1fr;
+    }
+
+    .backup-links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      margin-top: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .backup-link {
+      border: 0;
+      padding: 0;
+      min-height: 0;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+
+    .student-settings-card {
+      order: 2;
+      grid-column: 1;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      border: 1px solid color-mix(in srgb, var(--accent), white 55%);
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--panel), white 8%);
+      box-shadow: 0 18px 42px rgba(0,0,0,.1);
+      overflow: hidden;
+    }
+
+    .student-settings-card summary {
+      list-style: none;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      cursor: pointer;
+    }
+
+    .student-settings-card summary::-webkit-details-marker { display: none; }
+
+    .student-settings-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent-soft), white 30%);
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .student-settings-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.25;
+    }
+
+    .student-settings-subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .student-settings-chevron {
+      color: var(--accent);
+      font-size: 25px;
+      line-height: 1;
+      transition: transform .16s ease;
+    }
+
+    .student-settings-card[open] .student-settings-chevron {
+      transform: rotate(180deg);
+    }
+
+    .student-settings-body {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      padding: 0 14px 14px;
+    }
+
+    .student-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--accent-soft), transparent 35%);
+      margin-bottom: 14px;
+    }
+
+    .student-tab {
+      min-height: 44px;
+      border: 0;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--ink);
+      font-weight: 850;
+      padding: 8px;
+    }
+
+    .student-tab.active {
+      color: var(--accent);
+      background: var(--panel);
+      border: 1px solid color-mix(in srgb, var(--accent), white 45%);
+      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .student-tab-panel[hidden] { display: none; }
+
+    .student-tab-panel {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .student-form-card {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--panel), var(--accent-soft) 18%);
+    }
+
+    .student-form-card textarea {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 190px;
+    }
+
+    .floating-settings,
+    .floating-panel {
+      display: none !important;
+    }
+
+    button {
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 12px;
+      font: inherit;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    button.secondary {
+      color: var(--ink);
+      background: var(--secondary-bg);
+      border: 1px solid var(--line);
+    }
+
+    button.warning {
+      color: #2d250d;
+      background: var(--warn);
+    }
+
+    button.danger {
+      color: #fff;
+      background: var(--bad);
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 10px;
+      border-radius: 7px;
+      padding: 10px 11px;
+      background: var(--accent-soft);
+      color: var(--muted);
+      line-height: 1.5;
+      min-height: 42px;
+    }
+
+    .status.good { color: var(--good); background: var(--accent-soft); }
+    .status.bad { color: var(--bad); background: var(--accent-soft); }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1.1fr .75fr .75fr .9fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      max-height: calc(100vh - 118px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 8px 7px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: var(--accent-soft);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    td.result {
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .issue {
+      color: var(--bad);
+      font-weight: 700;
+    }
+
+    .rank {
+      display: inline-block;
+      margin-left: 5px;
+      border-radius: 999px;
+      padding: 1px 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #3b2a00;
+      background: var(--rank);
+      vertical-align: 1px;
+    }
+
+    .metric-good {
+      color: var(--good);
+      font-weight: 800;
+    }
+
+    .metric-muted {
+      color: var(--muted);
+    }
+
+    .raw-table {
+      max-height: 260px;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-weight: 700;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .result-btn {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      font-weight: 900;
+      padding: 0;
+      min-height: 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .person-order-input {
+      width: 56px;
+      padding: 6px 7px;
+      text-align: center;
+      font-weight: 850;
+    }
+
+    .course-group-select {
+      min-width: 72px;
+      padding: 6px 7px;
+      font-weight: 850;
+    }
+
+    .dialog-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(12, 25, 31, .45);
+    }
+
+    .dialog-backdrop.show { display: flex; }
+
+    .dialog {
+      width: min(420px, 100%);
+      border-radius: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+      overflow: hidden;
+    }
+
+    .dialog h2 {
+      margin: 0;
+      padding: 13px 15px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .dialog-content {
+      padding: 15px;
+      line-height: 1.8;
+    }
+
+    .dialog-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      padding: 8px 0;
+    }
+
+    .dialog-row strong {
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .examples {
+      background: var(--accent-soft);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 10px 11px;
+      line-height: 1.65;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* ===== NEW PRESTIGE DESIGN ELEMENTS ===== */
+
+    /* Section title with badge */
+    /* section-title merged above */
+
+    .live-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      letter-spacing: .3px;
+      white-space: nowrap;
+    }
+
+    .pb-badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 4px;
+      border: 1px solid var(--save);
+      color: var(--save);
+      background: transparent;
+      white-space: nowrap;
+    }
+
+    body[data-theme="prestige"] .pb-badge {
+      color: #c94f45;
+      border-color: #c94f45;
+    }
+
+    /* Char count row */
+    .char-count-row {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* 3-button action row */
+    .button-row-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .mix-panel {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--accent-soft);
+    }
+
+    .mix-top-row {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 10px;
+      align-items: end;
+    }
+
+    .mix-control-row {
+      display: grid;
+      grid-template-columns: 120px 96px minmax(0, 1fr);
+      gap: 10px;
+      align-items: end;
+    }
+
+    .mix-options {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 40px;
+      flex-wrap: wrap;
+    }
+
+    .mix-options-title {
+      margin: 0;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .mix-options label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .mix-options input {
+      width: auto;
+    }
+
+    .session-group-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .session-group-control input {
+      width: 58px;
+      text-align: center;
+      font-weight: 850;
+    }
+
+    .mix-count-wrap[hidden] {
+      display: none;
+    }
+
+    .mix-rows {
+      display: grid;
+      gap: 8px;
+    }
+
+    .mix-row {
+      display: grid;
+      grid-template-columns: 58px minmax(0, 1.25fr) minmax(0, .9fr) minmax(0, .9fr);
+      gap: 8px;
+    }
+
+    .mix-group-label {
+      display: grid;
+      place-items: center;
+      min-height: 40px;
+      border-radius: 7px;
+      background: var(--panel);
+      color: var(--accent);
+      font-weight: 950;
+      border: 1px solid var(--line);
+      align-self: end;
+    }
+
+    .mix-group-select {
+      min-height: 40px;
+      border-radius: 7px;
+      background: var(--panel);
+      color: var(--accent);
+      font-weight: 950;
+      border: 1px solid var(--line);
+      align-self: end;
+      text-align: center;
+      text-align-last: center;
+      padding: 8px 6px;
+    }
+
+    .mix-item-control {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 74px;
+      gap: 6px;
+    }
+
+    .mix-inline {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mix-suffix {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .btn-voice {
+      background: var(--btn-voice-bg) !important;
+      color: var(--btn-voice-color) !important;
+    }
+
+    .btn-parse {
+      background: var(--btn-parse-bg) !important;
+      color: var(--btn-parse-color) !important;
+    }
+
+    .btn-focus-input {
+      background: var(--btn-focus-bg) !important;
+      color: var(--btn-focus-color) !important;
+    }
+
+    .btn-example {
+      background: var(--btn-example-bg) !important;
+      color: var(--btn-example-color) !important;
+    }
+
+    .btn-save-main {
+      background: var(--btn-stop-bg) !important;
+      color: var(--btn-stop-color) !important;
+      opacity: 1 !important;
+    }
+
+    .btn-save-main:disabled {
+      background: var(--secondary-bg) !important;
+      color: var(--muted) !important;
+      opacity: .7 !important;
+    }
+
+    button.btn-clear-text {
+      background: var(--btn-clear-bg) !important;
+      color: var(--btn-clear-color) !important;
+    }
+
+    .btn-save-coral {
+      background: var(--save) !important;
+      color: #fff !important;
+      border: 0;
+      border-radius: 7px;
+      padding: 11px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* Extra button row (collapsible small buttons) */
+    .extra-btns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .extra-btns button {
+      min-height: 44px;
+      font-size: inherit;
+      padding: 11px 12px;
+    }
+
+    /* Save row layout */
+    .save-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .save-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .save-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0;
+    }
+
+    .save-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 9px 10px;
+      font: inherit;
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    .lane-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .lane-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: var(--accent-soft);
+    }
+
+    .lane-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: 850;
+      color: var(--ink);
+    }
+
+    .lane-card textarea {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    .lane-card .save-field + .save-field {
+      margin-top: 8px;
+    }
+
+    .snapshot-actions {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .snapshot-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .snapshot-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      overflow: hidden;
+    }
+
+    .snapshot-card summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 850;
+    }
+
+    .snapshot-body {
+      padding: 12px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .snapshot-raw {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      background: var(--accent-soft);
+    }
+
+    .snapshot-raw summary {
+      cursor: pointer;
+    }
+
+    .snapshot-raw textarea {
+      margin-top: 8px;
+      min-height: 96px;
+      font-size: 13px;
+    }
+
+    .snapshot-preview {
+      display: grid;
+      gap: 12px;
+    }
+
+    .snapshot-preview-group {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .snapshot-preview-title {
+      padding: 9px 11px;
+      background: var(--accent-soft);
+      font-weight: 850;
+    }
+
+    .snapshot-preview-workout {
+      padding: 8px 11px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      line-height: 1.5;
+    }
+
+    /* See detail row */
+    .see-detail-row {
+      text-align: center;
+      padding: 10px 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .see-detail-btn {
+      background: transparent !important;
+      color: var(--save) !important;
+      border: 0 !important;
+      font: inherit !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      cursor: pointer !important;
+      padding: 4px 8px !important;
+      min-height: 0 !important;
+    }
+
+    /* see-detail now uses --detail-btn-color var */
+
+    /* Textarea compact */
+    .input-section textarea {
+      min-height: 120px;
+    }
+
+    #commandBox {
+      min-height: 220px;
+    }
+
+    .parse-preview {
+      margin-top: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--panel), var(--accent-soft) 14%);
+      overflow: hidden;
+    }
+
+    .parse-preview[hidden] { display: none; }
+
+    .parse-preview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 850;
+    }
+
+    .parse-preview-count {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .parse-preview-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .parse-toggle-btn {
+      border: 1px solid color-mix(in srgb, var(--accent), transparent 52%);
+      background: color-mix(in srgb, var(--accent-soft), transparent 35%);
+      color: var(--accent);
+      min-height: 0;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .parse-preview.collapsed .parse-preview-table,
+    .parse-preview.collapsed .parse-preview-hint {
+      display: none;
+    }
+
+    .parse-preview-table {
+      display: grid;
+      grid-template-columns: minmax(86px, 1.05fr) minmax(50px, .58fr) minmax(54px, .62fr) minmax(86px, 1.05fr) minmax(70px, .8fr);
+      overflow-x: auto;
+    }
+
+    .parse-preview-table > div {
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .parse-preview-table .th {
+      color: var(--muted);
+      background: color-mix(in srgb, var(--accent-soft), transparent 28%);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .parse-method {
+      font-size: 12px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .parse-correct-btn {
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      font-weight: 850;
+      padding: 0 0 2px;
+      min-height: 0;
+      text-align: left;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+      text-decoration-color: color-mix(in srgb, var(--accent), transparent 15%);
+      cursor: pointer;
+    }
+
+    .parse-delete-btn {
+      border: 1px solid color-mix(in srgb, var(--danger), transparent 42%);
+      background: color-mix(in srgb, var(--danger), transparent 88%);
+      color: var(--danger);
+      min-height: 0;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+      cursor: pointer;
+    }
+
+    .parse-preview-hint {
+      padding: 9px 12px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .btn-stop-theme {
+      background: var(--btn-stop-bg) !important;
+      color: var(--btn-stop-color) !important;
+      opacity: 1 !important;
+    }
+    .btn-stop-theme:disabled {
+      background: var(--btn-stop-bg) !important;
+      color: var(--btn-stop-color) !important;
+      opacity: 1 !important;
+    }
+    /* clear btn uses secondary styling */
+    #clearTextBtn {
+      background: var(--btn-clear-bg) !important;
+      color: var(--btn-clear-color) !important;
+    }
+
+    /* Rank color badges - per rank position */
+    .rank { display: none; } /* hide old generic rank, use rank-colored below */
+
+    .rank-badge {
+      display: inline-block;
+      margin-left: 4px;
+      border-radius: 999px;
+      padding: 1px 6px;
+      font-size: 11px;
+      font-weight: 800;
+      vertical-align: 1px;
+    }
+    .rank-1 { background: var(--rank1-bg); color: var(--rank1-color); }
+    .rank-2 { background: var(--rank2-bg); color: var(--rank2-color); }
+    .rank-3 { background: var(--rank3-bg); color: var(--rank3-color); }
+    .rank-4up { background: var(--rank4-bg); color: var(--rank4-color); }
+
+    .cycle-diff-badge {
+      display: inline-block;
+      margin-left: 4px;
+      border-radius: 999px;
+      padding: 1px 6px;
+      font-size: 11px;
+      font-weight: 850;
+      vertical-align: 1px;
+      border: 1px solid currentColor;
+    }
+    .cycle-diff-plus {
+      color: var(--bad);
+      background: color-mix(in srgb, var(--bad), transparent 88%);
+    }
+    .cycle-diff-minus {
+      color: var(--good);
+      background: color-mix(in srgb, var(--good), transparent 86%);
+    }
+
+    /* See detail button uses theme color */
+    .see-detail-btn {
+      background: transparent !important;
+      color: var(--detail-btn-color) !important;
+      border: 0 !important;
+      font: inherit !important;
+      font-weight: 700 !important;
+      font-size: 14px !important;
+      cursor: pointer !important;
+      padding: 4px 8px !important;
+      min-height: 0 !important;
+    }
+
+    /* PB badge uses theme color */
+    .pb-badge {
+      border-color: var(--pb-border) !important;
+      color: var(--pb-text) !important;
+    }
+
+    /* Live badge */
+    .live-badge {
+      background: var(--live-bg) !important;
+      color: var(--live-text) !important;
+    }
+
+    /* Theme selector panel - expanded */
+    .settings-panel {
+      width: 220px !important;
+    }
+
+    .theme-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 6px 0 2px;
+    }
+
+    .theme-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 6px 4px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color .15s;
+      background: rgba(255,255,255,.1);
+    }
+
+    .theme-option:hover { background: rgba(255,255,255,.2); }
+    .theme-option.active { border-color: rgba(255,255,255,.7); }
+
+    .theme-swatch {
+      width: 32px;
+      height: 20px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,.2);
+    }
+
+    .theme-option-label {
+      font-size: 10px;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    body[data-theme="splash"] header {
+      background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, .88) 0%, rgba(255, 255, 255, .58) 38%, rgba(255, 255, 255, .08) 70%),
+        url("assets/hero-swimmer-splash.png");
+      background-size: cover, cover;
+      background-position: center, center right;
+      background-repeat: no-repeat, no-repeat;
+    }
+
+    body[data-theme="mist"] header {
+      background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .62) 40%, rgba(255, 255, 255, .08) 72%),
+        url("assets/hero-swimmer-mist.png");
+      background-size: cover, cover;
+      background-position: center, center right;
+      background-repeat: no-repeat, no-repeat;
+    }
+
+    /* Bunny header fun */
+    body[data-theme="bunny"] header {
+      background-image:
+        linear-gradient(90deg, rgba(255, 255, 255, .9) 0%, rgba(255, 255, 255, .62) 38%, rgba(255, 255, 255, .06) 70%),
+        url("assets/hero-swimmer-bunny.png") !important;
+      background-size: cover, cover !important;
+      background-position: center, center right !important;
+      background-repeat: no-repeat, no-repeat !important;
+      animation: none !important;
+    }
+
+    @keyframes bunnyRainbow {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    body[data-theme="bunny"] h1 {
+      background: linear-gradient(90deg,#ff6b9d,#f9a825,#43a047,#1e88e5,#8e24aa) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      color: transparent !important;
+      -webkit-text-stroke: 0 !important;
+      filter: none !important;
+    }
+
+    body[data-theme="bunny"] section {
+      border-radius: var(--theme-border-radius);
+    }
+
+    body[data-theme="bunny"] .live-badge {
+      background: linear-gradient(90deg,#ff6b9d,#f9a825,#43a047,#1e88e5,#8e24aa) !important;
+    }
+
+    /* header and h1 now use CSS vars directly */
+
+    /* Card border radius per theme */
+    section { border-radius: var(--theme-border-radius, 8px); }
+
+    /* header uses --header-grad var */
+
+    /* Ice Speed prestige layout */
+    body[data-theme="ice"] {
+      background:
+        radial-gradient(circle at 18% 4%, rgba(25, 130, 255, .24), transparent 32%),
+        radial-gradient(circle at 84% 0%, rgba(69, 126, 255, .16), transparent 28%),
+        linear-gradient(135deg, #031326 0%, #061b35 45%, #021022 100%);
+    }
+
+    body[data-theme="ice"] header {
+      background-image:
+        linear-gradient(90deg, rgba(3, 19, 38, .96) 0%, rgba(3, 19, 38, .82) 34%, rgba(3, 19, 38, .18) 66%, rgba(3, 19, 38, .04) 100%),
+        url("assets/hero-swimmer-ice-clean.png");
+      background-size: cover, cover;
+      background-position: center, center right;
+      background-repeat: no-repeat, no-repeat;
+      box-shadow: inset 0 -1px 0 rgba(25, 210, 255, .14);
+    }
+
+    body[data-theme="ice"] h1 {
+      text-shadow:
+        0 0 8px rgba(93, 183, 255, .75),
+        0 6px 0 rgba(22, 91, 156, .34),
+        0 18px 32px rgba(0, 0, 0, .55);
+    }
+
+    body[data-theme="ice"] .hero-subtitle {
+      color: #19d2ff;
+      opacity: 1;
+      letter-spacing: 1px;
+    }
+
+    body[data-theme="ice"] section {
+      background: linear-gradient(180deg, rgba(8, 34, 67, .82), rgba(3, 22, 48, .9));
+      border: 1px solid #17b6ff;
+      border-radius: 10px;
+      box-shadow:
+        0 0 0 1px rgba(25, 210, 255, .08),
+        0 0 28px rgba(0, 159, 255, .18),
+        inset 0 1px 0 rgba(255, 255, 255, .08);
+    }
+
+    body[data-theme="ice"] .section-title {
+      color: #eefbff;
+      background: linear-gradient(180deg, rgba(16, 144, 213, .72), rgba(7, 66, 123, .58));
+      border-bottom: 1px solid rgba(25, 210, 255, .58);
+      text-shadow: 0 0 10px rgba(25, 210, 255, .55);
+    }
+
+    body[data-theme="ice"] .live-badge {
+      background: linear-gradient(180deg, #45dcff, #14b9f3) !important;
+      color: #031326 !important;
+      box-shadow: 0 0 16px rgba(25, 210, 255, .34);
+    }
+
+    body[data-theme="ice"] .pb-badge {
+      border-color: #19d2ff !important;
+      color: #19d2ff !important;
+      background: rgba(4, 28, 62, .58);
+    }
+
+    body[data-theme="ice"] textarea,
+    body[data-theme="ice"] input,
+    body[data-theme="ice"] select {
+      background: rgba(2, 18, 42, .68);
+      border-color: rgba(103, 160, 210, .5);
+      color: #dcecff;
+      box-shadow: inset 0 0 18px rgba(0, 83, 150, .18);
+    }
+
+    body[data-theme="ice"] textarea::placeholder,
+    body[data-theme="ice"] input::placeholder {
+      color: #7897b4;
+    }
+
+    body[data-theme="ice"] .mix-panel,
+    body[data-theme="ice"] .floating-body,
+    body[data-theme="ice"] .snapshot-raw,
+    body[data-theme="ice"] .examples {
+      background: rgba(2, 18, 42, .38);
+      border-color: rgba(93, 183, 255, .28);
+    }
+
+    body[data-theme="ice"] .mix-suffix,
+    body[data-theme="ice"] .see-detail-btn {
+      color: #19d2ff !important;
+    }
+
+    body[data-theme="ice"] .btn-voice {
+      background: linear-gradient(135deg, #22d9ff, #0089ff) !important;
+      color: #ffffff !important;
+    }
+
+    body[data-theme="ice"] .btn-parse {
+      background: linear-gradient(135deg, #287cff, #004fc4) !important;
+      color: #ffffff !important;
+    }
+
+    body[data-theme="ice"] .btn-stop-theme,
+    body[data-theme="ice"] .btn-stop-theme:disabled {
+      background: linear-gradient(180deg, #3a1324 0%, #1f0b17 100%) !important;
+      color: #f5f2f4 !important;
+      border: 1px solid #d95c7a;
+      box-shadow: 0 0 0 1px rgba(217, 92, 122, .08), 0 8px 16px rgba(0, 0, 0, .35);
+    }
+
+    body[data-theme="ice"] #clearTextBtn {
+      background: linear-gradient(135deg, #135ec1, #0b3d87) !important;
+      color: #ffffff !important;
+    }
+
+    body[data-theme="ice"] .btn-focus-input {
+      background: linear-gradient(135deg, #19bac9, #087c91) !important;
+      color: #ffffff !important;
+    }
+
+    body[data-theme="ice"] .btn-example {
+      background: linear-gradient(135deg, #5db7ff, #1b6fc9) !important;
+      color: #ffffff !important;
+    }
+
+    body[data-theme="ice"] .button-row-3 button,
+    body[data-theme="ice"] .extra-btns button {
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 18px rgba(0, 0, 0, .22);
+    }
+
+    body[data-theme="ice"] .status {
+      background: rgba(17, 52, 91, .82);
+      color: #4ef1c8;
+      border: 1px solid rgba(93, 183, 255, .18);
+    }
+
+    body[data-theme="ice"] .status.good {
+      color: #4ef1c8;
+    }
+
+    body[data-theme="ice"] .status.bad {
+      color: #ff8a8a;
+    }
+
+    body[data-theme="ice"] th {
+      background: rgba(2, 18, 42, .46);
+      color: #f4fbff;
+    }
+
+    body[data-theme="ice"] th,
+    body[data-theme="ice"] td {
+      border-bottom-color: rgba(93, 183, 255, .25);
+    }
+
+    body[data-theme="ice"] .table-wrap {
+      scrollbar-color: #9db6cf rgba(65, 108, 154, .52);
+    }
+
+    body[data-theme="ice"] .see-detail-row {
+      border-top-color: rgba(93, 183, 255, .25);
+    }
+
+    /* Deep Amber prestige layout */
+    body[data-theme="amber"] {
+      background:
+        radial-gradient(circle at 12% 6%, rgba(245, 196, 87, .16), transparent 28%),
+        radial-gradient(circle at 92% 22%, rgba(202, 139, 36, .18), transparent 36%),
+        linear-gradient(135deg, #05070c 0%, #0a0e16 45%, #020407 100%);
+    }
+
+    body[data-theme="amber"] header {
+      background-image:
+        linear-gradient(90deg, rgba(5, 7, 12, .96) 0%, rgba(5, 7, 12, .78) 36%, rgba(5, 7, 12, .18) 68%, rgba(5, 7, 12, .04) 100%),
+        url("assets/hero-swimmer-amber.png");
+      background-size: cover, cover;
+      background-position: center, center right;
+      background-repeat: no-repeat, no-repeat;
+      box-shadow: inset 0 -1px 0 rgba(245, 196, 87, .14);
+    }
+
+    body[data-theme="amber"] h1 {
+      color: #ffe6a4;
+      text-shadow:
+        0 1px 0 #fff2bf,
+        0 4px 0 rgba(121, 75, 17, .5),
+        0 0 16px rgba(245, 196, 87, .48),
+        0 18px 32px rgba(0, 0, 0, .72);
+    }
+
+    body[data-theme="amber"] .hero-subtitle {
+      color: #f5c457;
+      opacity: 1;
+      letter-spacing: 2px;
+    }
+
+    body[data-theme="amber"] section {
+      background: linear-gradient(180deg, rgba(32, 25, 14, .86), rgba(4, 8, 14, .92));
+      border: 1px solid #c89436;
+      border-radius: 12px;
+      box-shadow:
+        0 0 0 1px rgba(255, 218, 138, .08),
+        0 0 32px rgba(202, 139, 36, .18),
+        inset 0 1px 0 rgba(255, 239, 186, .09);
+    }
+
+    body[data-theme="amber"] .section-title {
+      color: #ffe39b;
+      background: linear-gradient(180deg, rgba(88, 57, 18, .72), rgba(24, 18, 10, .74));
+      border-bottom: 1px solid rgba(245, 196, 87, .54);
+      text-shadow: 0 0 11px rgba(245, 196, 87, .44);
+    }
+
+    body[data-theme="amber"] .live-badge {
+      background: linear-gradient(180deg, #8a5b18, #3b2409) !important;
+      border: 1px solid #d9a542;
+      color: #ffe7a5 !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16), 0 0 16px rgba(202, 139, 36, .22);
+    }
+
+    body[data-theme="amber"] .pb-badge {
+      border-color: #d9a542 !important;
+      color: #f5c457 !important;
+      background: rgba(20, 15, 9, .62);
+    }
+
+    body[data-theme="amber"] textarea,
+    body[data-theme="amber"] input,
+    body[data-theme="amber"] select {
+      background: rgba(2, 5, 10, .7);
+      border-color: rgba(202, 139, 36, .58);
+      color: #f3dca9;
+      box-shadow: inset 0 0 20px rgba(202, 139, 36, .12);
+    }
+
+    body[data-theme="amber"] textarea::placeholder,
+    body[data-theme="amber"] input::placeholder {
+      color: #9f8b68;
+    }
+
+    body[data-theme="amber"] .mix-panel,
+    body[data-theme="amber"] .floating-body,
+    body[data-theme="amber"] .snapshot-raw,
+    body[data-theme="amber"] .examples {
+      background: rgba(20, 15, 9, .45);
+      border-color: rgba(202, 139, 36, .42);
+    }
+
+    body[data-theme="amber"] .mix-suffix,
+    body[data-theme="amber"] .see-detail-btn {
+      color: #f5c457 !important;
+    }
+
+    body[data-theme="amber"] .btn-voice {
+      background: linear-gradient(180deg, #d6a240, #7a4b10 58%, #33200a) !important;
+      color: #fff6dc !important;
+      border: 1px solid rgba(237, 183, 78, .65);
+    }
+
+    body[data-theme="amber"] .btn-parse {
+      background: linear-gradient(180deg, #a56b1b, #5f390c 60%, #211406) !important;
+      color: #fff6dc !important;
+      border: 1px solid rgba(237, 183, 78, .65);
+    }
+
+    body[data-theme="amber"] .btn-stop-theme,
+    body[data-theme="amber"] .btn-stop-theme:disabled {
+      background: linear-gradient(180deg, #6b1f1b, #3a0f0d 58%, #170504) !important;
+      border: 1px solid #c94f45;
+      color: #fff6dc !important;
+    }
+
+    body[data-theme="amber"] #clearTextBtn {
+      background: linear-gradient(180deg, #242018, #0d0c0a) !important;
+      color: #f0c76c !important;
+      border: 1px solid rgba(237, 183, 78, .5);
+    }
+
+    body[data-theme="amber"] .btn-focus-input {
+      background: linear-gradient(180deg, #896020, #3c2609) !important;
+      color: #fff0c8 !important;
+      border: 1px solid rgba(237, 183, 78, .56);
+    }
+
+    body[data-theme="amber"] .btn-example {
+      background: linear-gradient(180deg, #b9872b, #58380d) !important;
+      color: #fff2cc !important;
+      border: 1px solid rgba(237, 183, 78, .6);
+    }
+
+    body[data-theme="amber"] .button-row-3 button,
+    body[data-theme="amber"] .extra-btns button {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .55);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 245, 194, .2),
+        0 8px 18px rgba(0, 0, 0, .32),
+        0 0 15px rgba(202, 139, 36, .16);
+    }
+
+    body[data-theme="amber"] .status {
+      background: rgba(20, 15, 9, .82);
+      color: #f4c15b;
+      border: 1px solid rgba(202, 139, 36, .44);
+      box-shadow: inset 0 1px 0 rgba(255, 239, 186, .08);
+    }
+
+    body[data-theme="amber"] .status.good {
+      color: #f4c15b;
+    }
+
+    body[data-theme="amber"] .status.bad {
+      color: #ff9a80;
+    }
+
+    body[data-theme="amber"] th {
+      background: rgba(40, 26, 10, .48);
+      color: #ffe39b;
+    }
+
+    body[data-theme="amber"] th,
+    body[data-theme="amber"] td {
+      border-bottom-color: rgba(202, 139, 36, .28);
+    }
+
+    body[data-theme="amber"] .table-wrap {
+      scrollbar-color: #e0b96f rgba(40, 26, 10, .68);
+    }
+
+    body[data-theme="amber"] .see-detail-row {
+      border-top-color: rgba(202, 139, 36, .28);
+    }
+
+    /* ===== END NEW STYLES ===== */
+
+        @media (max-width: 980px) {
+      body { background: var(--bg); }
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        min-height: 174px;
+        padding: 14px;
+      }
+      .hero-copy { min-height: 132px; }
+      h1 {
+        max-width: 230px;
+        font-size: 29px;
+        line-height: .95;
+        white-space: normal;
+      }
+      .hero-subtitle { font-size: 17px; }
+      body[data-theme="ice"] header {
+        background-position: center, 58% center;
+      }
+      body[data-theme="splash"] header {
+        background-position: center, 64% center;
+      }
+      body[data-theme="bunny"] header {
+        background-position: center, 63% center !important;
+      }
+      body[data-theme="mist"] header {
+        background-position: center, 64% center;
+      }
+      body[data-theme="amber"] header {
+        background-position: center, 58% center;
+      }
+      .settings-menu { top: 10px; right: auto; left: 14px; z-index: 110; }
+      .settings-toggle { min-width: 58px; padding: 8px 10px; }
+      .settings-panel {
+        position: fixed;
+        top: 58px;
+        left: 14px;
+        right: auto;
+        width: min(330px, calc(100vw - 28px));
+        max-height: 68dvh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        z-index: 9999;
+      }
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        width: min(430px, 100vw);
+      }
+      .input-section,
+      .floating-settings,
+      .manual-section,
+      .snapshot-section,
+      .summary-section,
+      .raw-section {
+        grid-column: auto;
+        grid-row: auto;
+      }
+      section {
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+      }
+      .body { padding: 12px; }
+      textarea {
+        min-height: 210px;
+        font-size: 17px;
+      }
+      #rosterBox, #correctionBox, #aliasBox { min-height: 160px; }
+      .button-row {
+        position: sticky;
+        bottom: 0;
+        z-index: 4;
+        background: var(--panel);
+        padding: 8px 0 0;
+      }
+      button { min-height: 46px; }
+      .table-wrap { max-height: 70dvh; }
+      th, td {
+        padding: 9px 8px;
+        font-size: 13px;
+      }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .save-row { grid-template-columns: 1fr 1fr; }
+      .save-row #saveResultBtn { grid-column: 1 / -1; }
+      .lane-grid { grid-template-columns: 1fr; }
+      .snapshot-actions { grid-template-columns: 1fr; }
+      .mix-top-row { grid-template-columns: max-content minmax(0, 1fr); }
+      .mix-control-row { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
+      .mix-row { grid-template-columns: 44px minmax(0, 1.15fr) minmax(0, .85fr) minmax(0, .85fr); gap: 6px; }
+      .mix-item-control { grid-template-columns: minmax(0, 1fr) 58px; gap: 4px; }
+      .mix-row label { font-size: 13px; }
+      .mix-row input,
+      .mix-row select { padding: 8px 7px; font-size: 13px; }
+      .mix-suffix { font-size: 12px; }
+      .floating-settings { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+      .floating-panel summary { min-height: 40px; font-size: 12px; padding: 0 4px; }
+      .floating-panel[open] { grid-column: 1 / -1; }
+      main {
+        width: 100vw;
+        max-width: 100vw;
+        margin: 0;
+        padding-left: 0;
+        padding-right: 0;
+      }
+      section { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero-copy">
+      <h1>SWIM RECORDS</h1>
+      <div class="hero-subtitle">游泳成績語音記錄系統</div>
+    </div>
+    <div class="settings-menu">
+      <button id="settingsToggleBtn" class="settings-toggle" type="button">🎨 配色</button>
+      <div id="settingsPanel" class="settings-panel" aria-label="配色選擇" hidden>
+        <div style="color:#fff;font-size:11px;font-weight:800;padding:4px 2px 6px;opacity:.7;letter-spacing:.5px;">選擇配色主題</div>
+        <div class="theme-btn-row">
+          <button class="theme-option" data-theme="splash" type="button">
+            <div class="theme-swatch" style="background:linear-gradient(135deg,#ff6b9d,#4dc8f0);"></div>
+            <span class="theme-option-label">🎉 卡通</span>
+          </button>
+          <button class="theme-option" data-theme="mist" type="button">
+            <div class="theme-swatch" style="background:linear-gradient(135deg,#8b6dbd,#e88baa);"></div>
+            <span class="theme-option-label">🌸 柔和</span>
+          </button>
+          <button class="theme-option" data-theme="ice" type="button">
+            <div class="theme-swatch" style="background:linear-gradient(135deg,#00d4ff,#0a60ff);"></div>
+            <span class="theme-option-label">⚡ 極速</span>
+          </button>
+          <button class="theme-option" data-theme="amber" type="button">
+            <div class="theme-swatch" style="background:linear-gradient(135deg,#e89820,#070a14);"></div>
+            <span class="theme-option-label">🌊 琥珀</span>
+          </button>
+          <button class="theme-option" data-theme="bunny" type="button" style="grid-column:1/-1;">
+            <div class="theme-swatch" style="background:linear-gradient(90deg,#ff6b9d,#ffd93d,#6ee7b7,#a78bfa);width:100%;"></div>
+            <span class="theme-option-label">🐰 彩虹兔</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div>
+      <section class="input-section">
+        <div class="section-title">
+          口令文字
+          <span class="live-badge">＋ 即時整理中</span>
+        </div>
+        <div class="body">
+          <div class="mix-panel" aria-label="混組設定">
+            <datalist id="commonEventOptions">
+              <option value="100自"></option>
+              <option value="200自"></option>
+              <option value="75自"></option>
+              <option value="50自"></option>
+              <option value="200混"></option>
+            </datalist>
+            <div class="mix-top-row">
+              <div class="session-group-control">
+                <span>第</span>
+                <input id="sessionGroup" type="text" value="1" inputmode="numeric" aria-label="第幾組">
+                <span>組</span>
+              </div>
+              <div>
+                <div class="mix-options">
+                  <span class="mix-options-title">是否混組</span>
+                  <label><input type="radio" name="mixedGroup" id="mixedYes" value="yes"> 是</label>
+                  <label><input type="radio" name="mixedGroup" id="mixedNo" value="no" checked> 否</label>
+                </div>
+              </div>
+            </div>
+            <div class="mix-control-row">
+              <div>
+                <label for="defaultCourseGroup">預設課表</label>
+                <select id="defaultCourseGroup">
+                  <option value="1">A</option>
+                  <option value="2">B</option>
+                  <option value="3">C</option>
+                  <option value="4">D</option>
+                  <option value="5">E</option>
+                </select>
+              </div>
+              <div id="mixCountWrap" class="mix-count-wrap" hidden>
+                <label for="mixCount">課表組數</label>
+                <input id="mixCount" type="number" min="2" max="5" value="2">
+              </div>
+            </div>
+            <div id="mixRows" class="mix-rows"></div>
+          </div>
+          <textarea id="commandBox" placeholder="例：林小福000出發，方小美005出發，王小明010出發，林小福110回來，方小美120回來，王小明130回來，請整理"></textarea>
+          <div class="char-count-row"><span id="charCount">0 / 300</span></div>
+          <div class="button-row-3">
+            <button id="listenBtn" class="btn-voice">🎙 開始語音</button>
+            <button id="parseBtn" class="btn-parse">✨ 整理</button>
+            <button id="stopBtn" class="btn-stop-theme" disabled>■ 停止</button>
+          </div>
+          <div class="extra-btns">
+            <button id="clearTextBtn" class="secondary">🧹 清空文字</button>
+            <button id="focusInputBtn" class="btn-focus-input">解析</button>
+            <button id="loadExampleBtn" class="btn-example">📄 載入範例</button>
+          </div>
+          <section id="parsePreview" class="parse-preview" hidden>
+            <div class="parse-preview-head">
+              <span>解析結果</span>
+              <div class="parse-preview-actions">
+                <span id="parsePreviewCount" class="parse-preview-count">0 筆</span>
+                <button id="parseToggleBtn" class="parse-toggle-btn" type="button">收起</button>
+              </div>
+            </div>
+            <div id="parsePreviewTable" class="parse-preview-table"></div>
+            <div class="parse-preview-hint">解析只先拆口令並判定姓名，確認無誤後再按「整理」。</div>
+          </section>
+          <div id="status" class="status">可以用手機/電腦鍵盤的語音輸入一直講，最後按整理。Chrome/Edge 可試用「開始語音」。</div>
+        </div>
+      </section>
+
+      <div class="floating-settings">
+      <details class="floating-panel">
+        <summary>常用學生名單</summary>
+        <div class="floating-body">
+          <label for="rosterBox">每行一位學生，可自行新增</label>
+          <textarea id="rosterBox" style="min-height:190px;">林育丞
+方芮婕
+盧冠羽
+黃敬芫
+朱信毅
+黃柏豪
+朱畇嬨
+黃敬倫
+陳唯恩
+趙祤絜
+魏劭倫
+魏彤恩
+陳曉寬
+盧昱妡
+陳奕飛
+方玥棠</textarea>
+          <div class="button-row settings-action-row">
+            <button id="saveSettingsBtn">儲存</button>
+            <div class="backup-links">
+              <button class="backup-link downloadSettingsControl" type="button">↓ 下載備份</button>
+              <button class="backup-link importSettingsControl" type="button">↑ 匯入備份</button>
+            </div>
+          </div>
+          <p class="small">整理時會優先從這份名單抓姓名。臨時學生直接加在最後一行即可。</p>
+        </div>
+      </details>
+
+      <details class="floating-panel">
+        <summary>學生名單校正</summary>
+        <div class="floating-body">
+          <label for="correctionBox">每行一組：聽錯=正確</label>
+          <textarea id="correctionBox" style="min-height:150px;"></textarea>
+          <div class="button-row settings-action-row">
+            <button class="saveSettingsControl">儲存</button>
+            <div class="backup-links">
+              <button class="backup-link downloadSettingsControl" type="button">↓ 下載備份</button>
+              <button class="backup-link importSettingsControl" type="button">↑ 匯入備份</button>
+            </div>
+          </div>
+          <p class="small">例：語音常把「林昱辰」聽成「林泳辰」，就填 `泳辰=昱辰`。整理時會先自動替換。</p>
+        </div>
+      </details>
+
+      <details class="floating-panel">
+        <summary>小名叫法對照</summary>
+        <div class="floating-body">
+          <label for="aliasBox">每行一組：小名=正式姓名</label>
+          <textarea id="aliasBox" style="min-height:120px;">大學長=林育丞
+芮婕=方芮婕
+羽哥=盧冠羽
+圓圓=黃敬芫
+信毅=朱信毅
+柏豪=黃柏豪
+朱妹妹=朱畇嬨
+阿家=黃敬倫
+小恩=陳唯恩
+阿比=趙祤絜
+小倫=魏劭倫
+彤恩=魏彤恩
+阿寬=陳曉寬
+阿乖=盧昱妡
+阿飛=陳奕飛
+玥棠=方玥棠</textarea>
+          <div class="button-row settings-action-row">
+            <button class="saveSettingsControl">儲存</button>
+            <div class="backup-links">
+              <button class="backup-link downloadSettingsControl" type="button">↓ 下載備份</button>
+              <button class="backup-link importSettingsControl" type="button">↑ 匯入備份</button>
+            </div>
+          </div>
+          <p class="small">可以喊小名，例如「芮婕005出發」。結果會自動記到「方芮婕」。不要只填單一個字，兩個字以上會比較穩。</p>
+        </div>
+      </details>
+      </div>
+
+      <section class="manual-section" style="margin-top:16px;">
+        <div class="section-title">手動補一筆</div>
+        <div class="body">
+          <div class="grid-4">
+            <input id="manualName" placeholder="姓名">
+            <input id="manualTime" placeholder="時間碼">
+            <select id="manualAction">
+              <option>出發</option>
+              <option>回來</option>
+            </select>
+            <button id="manualAddBtn">加入</button>
+          </div>
+          <p class="small">手動補記也可以填 005、110、1:10、1分10秒。</p>
+        </div>
+      </section>
+
+      <input id="resultDate" type="hidden">
+    </div>
+
+    <section class="summary-section">
+      <div class="section-title">
+        整理表
+        <span class="pb-badge">PB：個人最佳</span>
+      </div>
+      <div class="table-wrap">
+        <table id="summaryTable"></table>
+      </div>
+      <div class="see-detail-row">
+        <button class="see-detail-btn" id="focusResultBtn2">點擊成績看明細 ∨</button>
+      </div>
+    </section>
+
+    <section class="snapshot-section">
+      <div class="section-title">
+        暫存紀錄
+        <span class="pb-badge">先暫存，最後一起上傳</span>
+      </div>
+      <div class="body">
+        <div class="snapshot-actions">
+          <button id="snapshotBtn">暫存本組並清空</button>
+          <button id="uploadSnapshotsBtn" class="btn-save-coral">全部上傳</button>
+          <button id="uploadSummaryBtn" class="secondary">上傳整理總表</button>
+          <button id="coachExcelBtn" class="secondary">下載教練Excel</button>
+          <button id="clearSnapshotsBtn" class="danger">清空暫存</button>
+        </div>
+        <div id="snapshotList" class="snapshot-list"></div>
+        <p class="small">每一組暫存後都可以點開，事後補 A/B/C/D/E 課表，並逐一標記學生這組游哪一個課表。</p>
+      </div>
+    </section>
+
+    <section class="raw-section" style="grid-column:1 / -1;">
+      <div class="section-title">原始紀錄與提醒</div>
+      <div class="table-wrap raw-table">
+        <table id="rawTable"></table>
+      </div>
+    </section>
+  </main>
+
+  <div class="dialog-backdrop" id="detailDialog">
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <h2 id="detailTitle">趟次明細</h2>
+      <div class="dialog-content" id="detailContent"></div>
+      <div class="body">
+        <button id="closeDetailBtn" class="secondary" style="width:100%;">關閉</button>
+      </div>
+    </div>
+  </div>
+
+  <input id="settingsImportInput" type="file" accept="application/json,.json" hidden>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzLKnWnLUhGO2nLKm5CCbqX3RfcOkKuDH6ymeVqefDOLiXpjCWSN5Vj5ksM5XkBT8K3Rg/exec"; // 新版游泳 Apps Script /exec 網址
+    const SETTINGS_KEY = "swimTimerSettings";
+    const LANE_PLAN_KEY = "swimTimerLanePlan";
+    const SNAPSHOT_KEY = "swimTimerSnapshots";
+    const maxTrips = 6;
+    const COURSE_GROUPS = ["A", "B", "C", "D", "E"];
+    const state = { entries: [], issues: [], summaryMetaOverrides: {} };
+    const parseState = { source: "", items: [], issues: [] };
+    let snapshots = [];
+    let recognition = null;
+    let listening = false;
+    let autoSaveTimer = null;
+
+    const el = (id) => document.getElementById(id);
+    const settingsPanel = el("settingsPanel");
+    const settingsToggleBtn = el("settingsToggleBtn");
+    if (settingsPanel && settingsPanel.parentElement !== document.body) {
+      document.body.appendChild(settingsPanel);
+    }
+
+    function currentApiUrl() {
+      return (localStorage.getItem("swimTimerApiUrl") || API_URL || "").trim();
+    }
+
+    function requireApiUrl() {
+      let url = currentApiUrl();
+      if (url) return url;
+      url = prompt("請貼上新版游泳 Apps Script /exec 網址，之後會記在這台瀏覽器：")?.trim() || "";
+      if (url) localStorage.setItem("swimTimerApiUrl", url);
+      return url;
+    }
+
+    function setStatus(message, type = "") {
+      const box = el("status");
+      box.textContent = message;
+      box.className = `status ${type}`.trim();
+    }
+
+    const THEMES = ["splash","mist","ice","amber","bunny"];
+
+    function applyTheme(theme) {
+      const t = THEMES.includes(theme) ? theme : "splash";
+      document.body.dataset.theme = t;
+      try { localStorage.setItem("swimTimerTheme", t); } catch {}
+      document.querySelectorAll(".theme-option[data-theme]").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.theme === t);
+      });
+    }
+
+    function settingsPayload() {
+      const studentRows = studentAliasRows();
+      const roster = studentRows.map((row) => row.name).join("\n");
+      const aliases = studentRows
+        .flatMap((row) => row.aliases.map((alias) => `${alias}=${row.name}`))
+        .join("\n");
+      return {
+        roster,
+        corrections: el("correctionBox")?.value || "",
+        aliases,
+        savedAt: new Date().toISOString(),
+      };
+    }
+
+    function lanePlanPayload() {
+      return {
+        laneAStudents: el("laneAStudents")?.value || "",
+        laneAWorkout: el("laneAWorkout")?.value || "",
+        laneBStudents: el("laneBStudents")?.value || "",
+        laneBWorkout: el("laneBWorkout")?.value || "",
+      };
+    }
+
+    function saveLanePlanLocal() {
+      try {
+        localStorage.setItem(LANE_PLAN_KEY, JSON.stringify(lanePlanPayload()));
+      } catch {}
+    }
+
+    function loadLanePlanLocal() {
+      try {
+        const data = JSON.parse(localStorage.getItem(LANE_PLAN_KEY) || "{}");
+        ["laneAStudents", "laneAWorkout", "laneBStudents", "laneBWorkout"].forEach((id) => {
+          if (typeof data[id] === "string" && el(id)) el(id).value = data[id];
+        });
+      } catch {}
+    }
+
+    function normalizeTimeObject(time) {
+      if (!time || typeof time !== "object") return time || null;
+      const copy = { ...time };
+      if (!Number.isFinite(copy.total)) {
+        if (Number.isFinite(copy.minute) && Number.isFinite(copy.second)) {
+          copy.total = copy.minute * 60 + copy.second;
+        } else if (typeof copy.label === "string") {
+          const parsed = parseTime(copy.label);
+          if (parsed) Object.assign(copy, parsed);
+        }
+      }
+      if (!copy.label && Number.isFinite(copy.total)) copy.label = fmt(copy.total);
+      return copy;
+    }
+
+    function cloneEntry(entry) {
+      return {
+        ...entry,
+        time: normalizeTimeObject(entry.time),
+      };
+    }
+
+    function normalizeSnapshot(snapshot, index = 0) {
+      const lanes = snapshot?.lanes || {};
+      return {
+        id: snapshot?.id || `${Date.now()}-${Math.random()}`,
+        title: snapshot?.title || `第${index + 1}組`,
+        date: snapshot?.date || new Date().toISOString().slice(0, 10),
+        commandText: snapshot?.commandText || "",
+        createdAt: snapshot?.createdAt || new Date().toISOString(),
+        entries: Array.isArray(snapshot?.entries) ? snapshot.entries.map(cloneEntry) : [],
+        issues: Array.isArray(snapshot?.issues) ? snapshot.issues : [],
+        sessionGroup: snapshot?.sessionGroup || "",
+        summaryMetaOverrides: snapshot?.summaryMetaOverrides || {},
+        summaryTableRows: Array.isArray(snapshot?.summaryTableRows)
+          ? snapshot.summaryTableRows.map((row) => Array.isArray(row) ? row.slice() : [row])
+          : [],
+        lanes: {
+          A: { students: lanes.A?.students || "", workout: lanes.A?.workout || "" },
+          B: { students: lanes.B?.students || "", workout: lanes.B?.workout || "" },
+          C: { students: lanes.C?.students || "", workout: lanes.C?.workout || "" },
+          D: { students: lanes.D?.students || "", workout: lanes.D?.workout || "" },
+        },
+        assignments: snapshot?.assignments || {},
+      };
+    }
+
+    function saveSnapshotsLocal() {
+      try {
+        localStorage.setItem(SNAPSHOT_KEY, JSON.stringify(snapshots));
+      } catch {}
+    }
+
+    function loadSnapshotsLocal() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(SNAPSHOT_KEY) || "[]");
+        snapshots = Array.isArray(raw) ? raw.map(normalizeSnapshot) : [];
+      } catch {
+        snapshots = [];
+      }
+    }
+
+    function snapshotNames(snapshot) {
+      return grouped(snapshot.entries).map((item) => item.name);
+    }
+
+    function snapshotLabel(snapshot, index) {
+      const count = snapshotNames(snapshot).length;
+      return `${snapshot.title || `第${index + 1}組`} · ${count}人`;
+    }
+
+    function savedAtValue(data) {
+      const time = Date.parse(data?.savedAt || "");
+      return Number.isFinite(time) ? time : 0;
+    }
+
+    function parseAliasSource(source) {
+      return String(source || "")
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter((line) => line && line.includes("="))
+        .map((line) => {
+          const [alias, name] = line.split("=").map((part) => part.trim()).filter(Boolean);
+          return alias && name ? { alias, name } : null;
+        })
+        .filter(Boolean);
+    }
+
+    function splitAliasList(source) {
+      return String(source || "")
+        .split(/[,\uFF0C\u3001]+/)
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function studentAliasRows(source = el("rosterBox")?.value || "") {
+      const seenNames = new Set();
+      return String(source || "")
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter(Boolean)
+        .map((line) => {
+          const eqIndex = line.indexOf("=");
+          const name = (eqIndex >= 0 ? line.slice(0, eqIndex) : line).trim();
+          const aliases = eqIndex >= 0 ? splitAliasList(line.slice(eqIndex + 1)) : [];
+          return name ? { name, aliases: aliases.filter((alias) => alias !== name) } : null;
+        })
+        .filter((row) => {
+          if (!row || seenNames.has(row.name)) return false;
+          seenNames.add(row.name);
+          return true;
+        });
+    }
+
+    function buildStudentAliasText(roster, aliases) {
+      const rows = String(roster || "")
+        .split(/\n+/)
+        .map((name) => name.trim())
+        .filter(Boolean)
+        .map((name) => ({ name, aliases: [] }));
+      const byName = new Map(rows.map((row) => [row.name, row]));
+      for (const { alias, name } of parseAliasSource(aliases)) {
+        if (!byName.has(name)) {
+          const row = { name, aliases: [] };
+          rows.push(row);
+          byName.set(name, row);
+        }
+        const row = byName.get(name);
+        if (alias !== name && !row.aliases.includes(alias)) row.aliases.push(alias);
+      }
+      return rows.map((row) => row.aliases.length ? `${row.name}=${row.aliases.join(",")}` : row.name).join("\n");
+    }
+
+    function setupStudentAliasUi() {
+      const rosterPanel = el("rosterBox")?.closest("details");
+      const aliasPanel = el("aliasBox")?.closest("details");
+      if (rosterPanel) {
+        const summary = rosterPanel.querySelector("summary");
+        const label = rosterPanel.querySelector("label");
+        const note = rosterPanel.querySelector(".small");
+        if (summary) summary.textContent = "學生與小名";
+        if (label) label.textContent = "每行一位學生：正式姓名=小名1,小名2";
+        if (note) note.textContent = "例：林育丞=大學長,林育成。只叫名字後兩字會自動支援，不用重複填。";
+      }
+      if (aliasPanel) aliasPanel.hidden = true;
+      if (el("rosterBox")) {
+        el("rosterBox").placeholder = "林育丞=大學長,林育成\n方芮婕=方瑞傑\n盧冠羽=羽哥";
+      }
+    }
+
+    function setupStudentSettingsCard() {
+      const rosterBox = el("rosterBox");
+      const correctionBox = el("correctionBox");
+      const aliasBox = el("aliasBox");
+      const oldWrap = document.querySelector(".floating-settings");
+      if (!rosterBox || !correctionBox || !oldWrap || document.querySelector(".student-settings-card")) return;
+
+      const card = document.createElement("details");
+      card.className = "student-settings-card";
+      card.innerHTML = `
+        <summary>
+          <div class="student-settings-icon">👥</div>
+          <div>
+            <div class="student-settings-title">管理學生名單設定</div>
+            <div class="student-settings-subtitle">常用名單、小名與校正</div>
+          </div>
+          <div class="student-settings-chevron">⌄</div>
+        </summary>
+        <div class="student-settings-body">
+          <div class="student-tabs" role="tablist" aria-label="學生名單設定分頁">
+            <button class="student-tab active" data-student-tab="roster" type="button">常用名單與小名</button>
+            <button class="student-tab" data-student-tab="correction" type="button">學生名單校正</button>
+          </div>
+          <div class="student-tab-panel student-form-card" data-student-panel="roster">
+            <label for="rosterBox">每行一位學生：正式姓名=小名1,小名2</label>
+            <div data-roster-slot></div>
+            <div class="button-row settings-action-row">
+              <button id="saveSettingsBtnNew" type="button">儲存</button>
+              <div class="backup-links">
+                <button class="backup-link downloadSettingsControl" type="button">↓ 下載備份</button>
+                <button class="backup-link importSettingsControl" type="button">↑ 匯入備份</button>
+              </div>
+            </div>
+            <p class="small">只叫名字後兩字會自動支援；沒有小名就只打一行正式姓名。</p>
+          </div>
+          <div class="student-tab-panel student-form-card" data-student-panel="correction" hidden>
+            <label for="correctionBox">每行一組：聽錯=正確</label>
+            <div data-correction-slot></div>
+            <div class="button-row settings-action-row">
+              <button class="saveSettingsControl" type="button">儲存</button>
+              <div class="backup-links">
+                <button class="backup-link downloadSettingsControl" type="button">↓ 下載備份</button>
+                <button class="backup-link importSettingsControl" type="button">↑ 匯入備份</button>
+              </div>
+            </div>
+            <p class="small">校正會在整理前先套用，適合放語音常聽錯的字。</p>
+          </div>
+        </div>
+      `;
+
+      oldWrap.insertAdjacentElement("beforebegin", card);
+      card.querySelector("[data-roster-slot]").appendChild(rosterBox);
+      card.querySelector("[data-correction-slot]").appendChild(correctionBox);
+      if (aliasBox) {
+        aliasBox.hidden = true;
+        card.appendChild(aliasBox);
+      }
+      oldWrap.hidden = true;
+
+      rosterBox.removeAttribute("style");
+      correctionBox.removeAttribute("style");
+      rosterBox.placeholder = "林育丞=大學長,林育成\n方芮婕=方瑞傑\n盧冠羽=羽哥\n陳唯恩";
+
+      correctionBox.placeholder = "林育丞=育成,育承,玉成,育辰,育誠\n方芮婕=瑞傑,瑞潔,芮傑,瑞婕\n盧冠羽=如冠宇,冠宇,冠瑜";
+      const correctionPanel = card.querySelector('[data-student-panel="correction"]');
+      const correctionLabel = correctionPanel?.querySelector('label[for="correctionBox"]');
+      const correctionNote = correctionPanel?.querySelector(".small");
+      if (correctionLabel) correctionLabel.textContent = "每行一位學生：正確姓名=聽錯1,聽錯2";
+      if (correctionNote) correctionNote.textContent = "例：林育丞=育成,育承,玉成。整理前會先把右邊聽錯字改成左邊正確姓名。";
+
+      card.querySelector("#saveSettingsBtnNew")?.addEventListener("click", saveSettings);
+      card.querySelectorAll(".saveSettingsControl").forEach((button) => button.addEventListener("click", saveSettings));
+      card.querySelectorAll(".downloadSettingsControl").forEach((button) => button.addEventListener("click", downloadSettings));
+      card.querySelectorAll(".importSettingsControl").forEach((button) => button.addEventListener("click", requestImportSettings));
+      card.querySelectorAll(".student-tab").forEach((button) => {
+        button.addEventListener("click", () => {
+          const target = button.dataset.studentTab;
+          card.querySelectorAll(".student-tab").forEach((tab) => tab.classList.toggle("active", tab === button));
+          card.querySelectorAll(".student-tab-panel").forEach((panel) => {
+            panel.hidden = panel.dataset.studentPanel !== target;
+          });
+        });
+      });
+    }
+
+    function saveSettingsLocal(showStatus = false) {
+      try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settingsPayload()));
+        if (showStatus) setStatus("已先暫存在這台手機/瀏覽器，按「儲存」可同步到雲端。", "good");
+        return true;
+      } catch {
+        if (showStatus) setStatus("暫存失敗：這個瀏覽器可能封鎖本機儲存。", "bad");
+        return false;
+      }
+    }
+
+    function queueSettingsAutosave() {
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(() => saveSettingsLocal(false), 350);
+    }
+
+    async function sheetGet(key) {
+      try {
+        const url = currentApiUrl();
+        if (!url) return null;
+        const res = await fetch(`${url}?key=${encodeURIComponent(key)}`);
+        const data = await res.json();
+        return data.value || null;
+      } catch {
+        return null;
+      }
+    }
+
+    async function sheetSet(key, value) {
+      const url = requireApiUrl();
+      if (!url) throw new Error("missing-api-url");
+      await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ key, value }),
+      });
+    }
+
+    async function sheetAction(payload) {
+      const url = requireApiUrl();
+      if (!url) throw new Error("missing-api-url");
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify(payload),
+      });
+      return res.json().catch(() => ({}));
+    }
+
+    function applySettings(data) {
+      if (!data || typeof data !== "object") return false;
+      if (typeof data.roster === "string") {
+        el("rosterBox").value = buildStudentAliasText(data.roster, data.aliases || "");
+      }
+      if (typeof data.corrections === "string") el("correctionBox").value = data.corrections;
+      if (typeof data.aliases === "string") el("aliasBox").value = data.aliases;
+      return true;
+    }
+
+    async function saveSettings() {
+      const payload = settingsPayload();
+      try {
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(payload));
+      } catch {}
+
+      setStatus("正在儲存...", "good");
+      try {
+        await sheetSet(SETTINGS_KEY, JSON.stringify(payload));
+        setStatus("設定已儲存，也同步留在這台手機/瀏覽器。", "good");
+      } catch {
+        setStatus("雲端儲存失敗，但已盡量保存在這台手機/瀏覽器。", "bad");
+      }
+    }
+
+    async function loadSettings() {
+      let remoteData = null;
+      let localData = null;
+      try {
+        const remote = await sheetGet(SETTINGS_KEY);
+        if (remote) remoteData = JSON.parse(remote);
+      } catch {}
+
+      try {
+        const raw = localStorage.getItem(SETTINGS_KEY);
+        if (raw) localData = JSON.parse(raw);
+      } catch {}
+
+      if (localData && savedAtValue(localData) > savedAtValue(remoteData)) {
+        if (applySettings(localData)) setStatus("已載入這台手機較新的暫存設定。按「儲存」可同步到雲端。", "good");
+        return;
+      }
+
+      if (remoteData) {
+        if (applySettings(remoteData)) {
+          try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(remoteData)); } catch {}
+          setStatus("已從 Google Drive 載入設定。", "good");
+        }
+        return;
+      }
+
+      if (localData && applySettings(localData)) setStatus("已從這台手機/瀏覽器載入設定。", "good");
+    }
+
+    function downloadSettings() {
+      const blob = new Blob([JSON.stringify(settingsPayload(), null, 2)], { type: "application/json;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `游泳口令設定_${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+      setStatus("已下載設定備份。", "good");
+    }
+
+    function requestImportSettings() {
+      const input = el("settingsImportInput");
+      if (!input) return;
+      input.value = "";
+      input.click();
+    }
+
+    async function importSettingsFile(file) {
+      if (!file) return;
+      try {
+        const payload = JSON.parse(await file.text());
+        if (!payload || typeof payload !== "object") throw new Error("invalid-settings");
+        if (!applySettings(payload)) throw new Error("invalid-settings");
+        const localPayload = settingsPayload();
+        try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(localPayload)); } catch {}
+        setStatus("已匯入備份並暫存在這台裝置。確認名單後請按「儲存」同步到雲端。", "good");
+      } catch {
+        setStatus("匯入失敗：請確認選到的是設定備份 JSON 檔。", "bad");
+      }
+    }
+
+    function corrections() {
+      const source = el("correctionBox")?.value || "";
+      return source
+        .split(/\n+/)
+        .map((line) => line.trim())
+        .filter((line) => line && line.includes("="))
+        .flatMap((line) => {
+          const eqIndex = line.indexOf("=");
+          const right = line.slice(0, eqIndex).trim();
+          const wrongs = splitAliasList(line.slice(eqIndex + 1));
+          return wrongs
+            .filter((wrong) => wrong && wrong !== right)
+            .map((wrong) => ({ wrong, right }));
+        });
+    }
+
+    function applyCorrections(text) {
+      let output = text;
+      for (const { wrong, right } of corrections()) {
+        output = output.replaceAll(wrong, right);
+      }
+      return output;
+    }
+
+    function rosterNames() {
+      return studentAliasRows()
+        .map((row) => row.name)
+        .sort((a, b) => b.length - a.length);
+    }
+
+    function aliasEntries() {
+      const merged = studentAliasRows()
+        .flatMap((row) => row.aliases.map((alias) => ({ alias, name: row.name })));
+      const legacy = parseAliasSource(el("aliasBox")?.value || "");
+      const seen = new Set();
+      return [...merged, ...legacy].filter((item) => {
+        const key = `${item.alias}=>${item.name}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function nameTokens() {
+      const tokens = [];
+      const seen = new Set();
+      const addToken = (token, name, type = "alias") => {
+        if (!token || token.length < 2) return;
+        const key = `${token}=>${name}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        tokens.push({ token, name, type });
+      };
+      rosterNames().forEach((name) => {
+        addToken(name, name, "full");
+        if (name.length >= 3) addToken(name.slice(-2), name, "suffix");
+      });
+      for (const { alias, name } of aliasEntries()) {
+        addToken(alias, name, "alias");
+      }
+      return tokens.sort((a, b) => b.token.length - a.token.length);
+    }
+
+    function canonicalName(rawName) {
+      const alias = aliasEntries().find((item) => item.alias === rawName);
+      return alias ? alias.name : rawName;
+    }
+
+    function levDistance(a, b) {
+      const m = a.length;
+      const n = b.length;
+      const dp = Array.from({ length: m + 1 }, (_, i) => Array.from({ length: n + 1 }, (_, j) => (i ? 0 : j)));
+      for (let i = 0; i <= m; i++) dp[i][0] = i;
+      for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+          dp[i][j] = a[i - 1] === b[j - 1]
+            ? dp[i - 1][j - 1]
+            : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+        }
+      }
+      return dp[m][n];
+    }
+
+    function similarityScore(a, b) {
+      if (!a || !b) return 0;
+      if (a === b) return 100;
+      return Math.round((1 - levDistance(a, b) / Math.max(a.length, b.length)) * 100);
+    }
+
+    const BOPO = {
+      一: "ㄧ", 乙: "ㄧˇ", 丁: "ㄉㄧㄥ", 七: "ㄑㄧ", 乃: "ㄋㄞˇ", 九: "ㄐㄧㄡˇ", 了: "ㄌㄜ", 二: "ㄦˋ",
+      人: "ㄖㄣˊ", 入: "ㄖㄨˋ", 八: "ㄅㄚ", 刀: "ㄉㄠ", 力: "ㄌㄧˋ", 十: "ㄕˊ", 又: "ㄧㄡˋ",
+      三: "ㄙㄢ", 千: "ㄑㄧㄢ", 大: "ㄉㄚˋ", 女: "ㄋㄩˇ", 子: "ㄗˇ", 山: "ㄕㄢ", 川: "ㄔㄨㄢ",
+      工: "ㄍㄨㄥ", 己: "ㄐㄧˇ", 巾: "ㄐㄧㄣ", 干: "ㄍㄢ", 幺: "ㄧㄠ", 弓: "ㄍㄨㄥ", 才: "ㄘㄞˊ",
+      元: "ㄩㄢˊ", 六: "ㄌㄧㄡˋ", 公: "ㄍㄨㄥ", 分: "ㄈㄣ", 切: "ㄑㄧㄝ", 天: "ㄊㄧㄢ", 方: "ㄈㄤ",
+      木: "ㄇㄨˋ", 水: "ㄕㄨㄟˇ", 火: "ㄏㄨㄛˇ", 王: "ㄨㄤˊ", 台: "ㄊㄞˊ", 世: "ㄕˋ", 北: "ㄅㄟˇ",
+      半: "ㄅㄢˋ", 古: "ㄍㄨˇ", 司: "ㄙ", 右: "ㄧㄡˋ", 四: "ㄙˋ", 外: "ㄨㄞˋ", 左: "ㄗㄨㄛˇ",
+      市: "ㄕˋ", 布: "ㄅㄨˋ", 平: "ㄆㄧㄥˊ", 幼: "ㄧㄡˋ", 弘: "ㄏㄨㄥˊ", 必: "ㄅㄧˋ", 打: "ㄉㄚˇ",
+      本: "ㄅㄣˇ", 末: "ㄇㄛˋ", 正: "ㄓㄥˋ", 民: "ㄇㄧㄣˊ", 生: "ㄕㄥ", 用: "ㄩㄥˋ", 白: "ㄅㄞˊ",
+      皮: "ㄆㄧˊ", 目: "ㄇㄨˋ", 立: "ㄌㄧˋ", 交: "ㄐㄧㄠ", 亦: "ㄧˋ", 仲: "ㄓㄨㄥˋ", 先: "ㄒㄧㄢ",
+      全: "ㄑㄩㄢˊ", 共: "ㄍㄨㄥˋ", 再: "ㄗㄞˋ", 冰: "ㄅㄧㄥ", 列: "ㄌㄧㄝˋ", 印: "ㄧㄣˋ", 危: "ㄨㄟˊ",
+      各: "ㄍㄜˋ", 合: "ㄏㄜˊ", 地: "ㄉㄧˋ", 多: "ㄉㄨㄛ", 安: "ㄢ", 字: "ㄗˋ", 守: "ㄕㄡˇ",
+      州: "ㄓㄡ", 式: "ㄕˋ", 收: "ㄕㄡ", 曲: "ㄑㄩ", 有: "ㄧㄡˇ", 朱: "ㄓㄨ", 次: "ㄘˋ",
+      江: "ㄐㄧㄤ", 百: "ㄅㄞˇ", 竹: "ㄓㄨˊ", 米: "ㄇㄧˇ", 羊: "ㄧㄤˊ", 老: "ㄌㄠˇ", 考: "ㄎㄠˇ",
+      而: "ㄦˊ", 耳: "ㄦˇ", 肉: "ㄖㄡˋ", 色: "ㄙㄜˋ", 行: "ㄒㄧㄥˊ", 西: "ㄒㄧ", 位: "ㄨㄟˋ",
+      何: "ㄏㄜˊ", 余: "ㄩˊ", 典: "ㄉㄧㄢˇ", 其: "ㄑㄧˊ", 函: "ㄏㄢˊ", 刻: "ㄎㄜˋ", 卷: "ㄐㄩㄢˇ",
+      取: "ㄑㄩˇ", 受: "ㄕㄡˋ", 坦: "ㄊㄢˇ", 坤: "ㄎㄨㄣ", 季: "ㄐㄧˋ", 孟: "ㄇㄥˋ", 宗: "ㄗㄨㄥ",
+      定: "ㄉㄧㄥˋ", 宜: "ㄧˊ", 宙: "ㄓㄡˋ", 岳: "ㄩㄝˋ", 彼: "ㄅㄧˇ", 忠: "ㄓㄨㄥ", 明: "ㄇㄧㄥˊ",
+      昌: "ㄔㄤ", 東: "ㄉㄨㄥ", 松: "ㄙㄨㄥ", 林: "ㄌㄧㄣˊ", 武: "ㄨˇ", 泛: "ㄈㄢˋ", 泰: "ㄊㄞˋ",
+      炎: "ㄧㄢˊ", 玩: "ㄨㄢˊ", 玫: "ㄇㄟˊ", 玲: "ㄌㄧㄥˊ", 直: "ㄓˊ", 知: "ㄓ", 芝: "ㄓ",
+      花: "ㄏㄨㄚ", 芳: "ㄈㄤ", 虎: "ㄏㄨˇ", 表: "ㄅㄧㄠˇ", 金: "ㄐㄧㄣ", 長: "ㄓㄤˇ", 門: "ㄇㄣˊ",
+      阿: "ㄚ", 青: "ㄑㄧㄥ", 勇: "ㄩㄥˇ", 南: "ㄋㄢˊ", 城: "ㄔㄥˊ", 姜: "ㄐㄧㄤ", 姿: "ㄗ",
+      威: "ㄨㄟ", 建: "ㄐㄧㄢˋ", 思: "ㄙ", 政: "ㄓㄥˋ", 春: "ㄔㄨㄣ", 昭: "ㄓㄠ", 柔: "ㄖㄡˊ",
+      柯: "ㄎㄜ", 柳: "ㄌㄧㄡˇ", 柱: "ㄓㄨˋ", 段: "ㄉㄨㄢˋ", 洋: "ㄧㄤˊ", 洪: "ㄏㄨㄥˊ", 炫: "ㄒㄩㄢˋ",
+      皇: "ㄏㄨㄤˊ", 科: "ㄎㄜ", 美: "ㄇㄟˇ", 耀: "ㄧㄠˋ", 胡: "ㄏㄨˊ", 致: "ㄓˋ", 苗: "ㄇㄧㄠˊ",
+      英: "ㄧㄥ", 軍: "ㄐㄩㄣ", 音: "ㄧㄣ", 風: "ㄈㄥ", 飛: "ㄈㄟ", 倍: "ㄅㄟˋ", 倫: "ㄌㄨㄣˊ",
+      倩: "ㄑㄧㄢˋ", 俊: "ㄐㄩㄣˋ", 修: "ㄒㄧㄡ", 冠: "ㄍㄨㄢ", 凌: "ㄌㄧㄥˊ", 原: "ㄩㄢˊ",
+      哲: "ㄓㄜˊ", 家: "ㄐㄧㄚ", 宸: "ㄔㄣˊ", 容: "ㄖㄨㄥˊ", 峰: "ㄈㄥ", 恩: "ㄣ", 恭: "ㄍㄨㄥ",
+      桃: "ㄊㄠˊ", 格: "ㄍㄜˊ", 海: "ㄏㄞˇ", 浦: "ㄆㄨˇ", 涵: "ㄏㄢˊ", 烈: "ㄌㄧㄝˋ", 珊: "ㄕㄢ",
+      珍: "ㄓㄣ", 珠: "ㄓㄨ", 班: "ㄅㄢ", 益: "ㄧˋ", 真: "ㄓㄣ", 祐: "ㄧㄡˋ", 祖: "ㄗㄨˇ",
+      秘: "ㄇㄧˋ", 素: "ㄙㄨˋ", 翁: "ㄨㄥ", 能: "ㄋㄥˊ", 草: "ㄘㄠˇ", 記: "ㄐㄧˋ", 豹: "ㄅㄠˋ",
+      財: "ㄘㄞˊ", 逢: "ㄈㄥˊ", 馬: "ㄇㄚˇ", 高: "ㄍㄠ", 乾: "ㄑㄧㄢˊ", 偉: "ㄨㄟˇ", 健: "ㄐㄧㄢˋ",
+      國: "ㄍㄨㄛˊ", 培: "ㄆㄟˊ", 堂: "ㄊㄤˊ", 婉: "ㄨㄢˇ", 婷: "ㄊㄧㄥˊ", 崇: "ㄔㄨㄥˊ", 彬: "ㄅㄧㄣ",
+      得: "ㄉㄜˊ", 敏: "ㄇㄧㄣˇ", 梅: "ㄇㄟˊ", 梓: "ㄗˇ", 淑: "ㄕㄨˊ", 深: "ㄕㄣ", 清: "ㄑㄧㄥ",
+      球: "ㄑㄧㄡˊ", 理: "ㄌㄧˇ", 祥: "ㄒㄧㄤˊ", 章: "ㄓㄤ", 紳: "ㄕㄣ", 紹: "ㄕㄠˋ", 細: "ㄒㄧˋ",
+      習: "ㄒㄧˊ", 荷: "ㄏㄜˊ", 許: "ㄒㄩˇ", 軟: "ㄖㄨㄢˇ", 通: "ㄊㄨㄥ", 野: "ㄧㄝˇ", 陳: "ㄔㄣˊ",
+      雪: "ㄒㄩㄝ", 魚: "ㄩˊ", 鳥: "ㄋㄧㄠˇ", 麥: "ㄇㄞˋ", 傑: "ㄐㄧㄝˊ", 勝: "ㄕㄥˋ", 博: "ㄅㄛˊ",
+      喜: "ㄒㄧˇ", 善: "ㄕㄢˋ", 喬: "ㄑㄧㄠˊ", 富: "ㄈㄨˋ", 彭: "ㄆㄥˊ", 惠: "ㄏㄨㄟˋ", 智: "ㄓˋ",
+      棠: "ㄊㄤˊ", 欽: "ㄑㄧㄣ", 游: "ㄧㄡˊ", 湖: "ㄏㄨˊ", 然: "ㄖㄢˊ", 琪: "ㄑㄧˊ", 琳: "ㄌㄧㄣˊ",
+      琴: "ㄑㄧㄣˊ", 琦: "ㄑㄧˊ", 登: "ㄉㄥ", 發: "ㄈㄚ", 程: "ㄔㄥˊ", 華: "ㄏㄨㄚˊ", 菁: "ㄐㄧㄥ",
+      菊: "ㄐㄩˊ", 萍: "ㄆㄧㄥˊ", 虛: "ㄒㄩ", 超: "ㄔㄠ", 軸: "ㄓㄡˊ", 雅: "ㄧㄚˇ", 順: "ㄕㄨㄣˋ",
+      黃: "ㄏㄨㄤˊ", 傳: "ㄔㄨㄢˊ", 嘉: "ㄐㄧㄚ", 廉: "ㄌㄧㄢˊ", 彰: "ㄓㄤ", 慈: "ㄘˊ", 慧: "ㄏㄨㄟˋ",
+      漢: "ㄏㄢˋ", 瑋: "ㄨㄟˋ", 瑜: "ㄩˊ", 瑞: "ㄖㄨㄟˋ", 福: "ㄈㄨˊ", 精: "ㄐㄧㄥ", 綠: "ㄌㄩˋ",
+      綺: "ㄑㄧˇ", 維: "ㄨㄟˊ", 蒙: "ㄇㄥˊ", 誠: "ㄔㄥˊ", 豪: "ㄏㄠˊ", 銘: "ㄇㄧㄥˊ", 銀: "ㄧㄣˊ",
+      領: "ㄌㄧㄥˇ", 劉: "ㄌㄧㄡˊ", 德: "ㄉㄜˊ", 慶: "ㄑㄧㄥˋ", 樂: "ㄌㄜˋ", 毅: "ㄧˋ", 潔: "ㄐㄧㄝˊ",
+      潘: "ㄆㄢ", 潤: "ㄖㄨㄣˋ", 蓉: "ㄖㄨㄥˊ", 賢: "ㄒㄧㄢˊ", 輝: "ㄏㄨㄟ", 鋒: "ㄈㄥ", 錦: "ㄐㄧㄣˇ",
+      靜: "ㄐㄧㄥˋ", 駿: "ㄐㄩㄣˋ", 學: "ㄒㄩㄝˊ", 憲: "ㄒㄧㄢˋ", 曉: "ㄒㄧㄠˇ", 燕: "ㄧㄢˋ",
+      獨: "ㄉㄨˊ", 盧: "ㄌㄨˊ", 穎: "ㄧㄥˇ", 興: "ㄒㄧㄥ", 親: "ㄑㄧㄣ", 賴: "ㄌㄞˋ", 遠: "ㄩㄢˇ",
+      錢: "ㄑㄧㄢˊ", 鴻: "ㄏㄨㄥˊ", 龍: "ㄌㄨㄥˊ", 優: "ㄧㄡ", 壓: "ㄧㄚ", 孫: "ㄙㄨㄣ", 應: "ㄧㄥˋ",
+      濟: "ㄐㄧˋ", 禮: "ㄌㄧˇ", 謙: "ㄑㄧㄢ", 豐: "ㄈㄥ", 鍾: "ㄓㄨㄥ", 韓: "ㄏㄢˊ", 顏: "ㄧㄢˊ",
+      魏: "ㄨㄟˋ", 劍: "ㄐㄧㄢˋ", 嚴: "ㄧㄢˊ", 寬: "ㄎㄨㄢ", 欣: "ㄒㄧㄣ", 沛: "ㄆㄟˋ", 育: "ㄩˋ",
+      丞: "ㄔㄥˊ", 羽: "ㄩˇ", 祤: "ㄩˋ", 絜: "ㄐㄧㄝˊ", 昱: "ㄩˋ", 妡: "ㄒㄧㄣ", 敬: "ㄐㄧㄥˋ",
+      芫: "ㄩㄢˊ", 唯: "ㄨㄟˊ", 奕: "ㄧˋ", 信: "ㄒㄧㄣˋ", 畇: "ㄩㄣˊ", 嬨: "ㄘˊ", 彤: "ㄊㄨㄥˊ",
+      劭: "ㄕㄠˋ", 玥: "ㄩㄝˋ", 芮: "ㄖㄨㄟˋ", 婕: "ㄐㄧㄝˊ", 柏: "ㄅㄛˊ", 邦: "ㄅㄤ", 趙: "ㄓㄠˋ",
+      比: "ㄅㄧˇ", 乖: "ㄍㄨㄞ", 張: "ㄓㄤ", 伽: "ㄐㄧㄚ", 意: "ㄧˋ", 義: "ㄧˋ", 易: "ㄧˋ", 藝: "ㄧˋ",
+      少: "ㄕㄠˇ", 兆: "ㄓㄠˋ", 妹: "ㄇㄟˋ", 每: "ㄇㄟˇ", 款: "ㄎㄨㄢˇ", 圓: "ㄩㄢˊ", 園: "ㄩㄢˊ",
+      猿: "ㄩㄢˊ", 源: "ㄩㄢˊ", 雲: "ㄩㄣˊ", 云: "ㄩㄣˊ", 辰: "ㄔㄣˊ", 承: "ㄔㄥˊ", 成: "ㄔㄥˊ",
+      皓: "ㄏㄠˋ", 芸: "ㄩㄣˊ", 霏: "ㄈㄟ", 月: "ㄩㄝˋ", 玉: "ㄩˋ", 心: "ㄒㄧㄣ", 怡: "ㄧˊ",
+      如: "ㄖㄨˊ", 宇: "ㄩˇ", 哥: "ㄍㄜ", 緣: "ㄩㄢˊ", 逸: "ㄧˋ", 菲: "ㄈㄟ", 綸: "ㄌㄨㄣˊ", 同: "ㄊㄨㄥˊ",
+      靖: "ㄐㄧㄥˋ", 佩: "ㄆㄟˋ", 幫: "ㄅㄤ",
+    };
+
+    function bopoCode(text) {
+      return String(text || "")
+        .split("")
+        .map((ch) => (BOPO[ch] || ch).replace(/[ˊˇˋ˙]/g, ""))
+        .join(" ");
+    }
+
+    function likelyNameTokens(cleaned) {
+      const tokens = nameTokens();
+      if (cleaned.length <= 2) return tokens.filter((item) => item.type !== "full" || item.token.length <= 2);
+      return tokens;
+    }
+
+    function bestNameMatch(cleaned, scorer) {
+      let best = null;
+      let bestScore = 0;
+      let tied = false;
+      for (const item of likelyNameTokens(cleaned)) {
+        const score = scorer(item);
+        if (score > bestScore) {
+          bestScore = score;
+          best = item;
+          tied = false;
+        } else if (score === bestScore && best && item.name !== best.name) {
+          tied = true;
+        }
+      }
+      return { best, bestScore, tied };
+    }
+
+    function resolveParsedName(rawName) {
+      const cleaned = String(rawName || "").replace(/[0-9０-９]+$/g, "").trim();
+      const token = nameTokens().find((item) => cleaned === item.token || cleaned.endsWith(item.token));
+      if (token) {
+        return { name: token.name, method: token.name === cleaned ? "完全符合" : "小名", score: 100 };
+      }
+      const correction = corrections().find((item) => item.wrong === cleaned || cleaned.endsWith(item.wrong));
+      if (correction) {
+        return { name: correction.right, method: "校正", score: 100 };
+      }
+      const { best, bestScore, tied } = bestNameMatch(cleaned, (item) => similarityScore(cleaned, item.token));
+      if (best && bestScore >= 70 && !tied) {
+        return { name: best.name, method: "模糊", score: bestScore };
+      }
+      const cleanedBopo = bopoCode(cleaned);
+      const { best: bestBopo, bestScore: bestBopoScore, tied: bopoTie } =
+        bestNameMatch(cleaned, (item) => similarityScore(cleanedBopo, bopoCode(item.token)));
+      const bopoThreshold = cleaned.length <= 2 ? 75 : 80;
+      if (bestBopo && bestBopoScore >= bopoThreshold && !bopoTie) {
+        return { name: bestBopo.name, method: "注音模糊", score: bestBopoScore };
+      }
+      return { name: cleaned, method: "未辨識", score: bestScore };
+    }
+
+    function normalizeText(text) {
+      return applyCorrections(text)
+        .replace(/[，、。；;｜|]/g, ",")
+        .replace(/\s+/g, "")
+        .replace(/兩/g, "二")
+        .replace(/零/g, "0")
+        .replace(/〇/g, "0");
+    }
+
+    function chineseNumberToInt(raw) {
+      if (raw === undefined || raw === null || raw === "") return 0;
+      const s = String(raw).replace(/零|〇/g, "");
+      if (/^\d+$/.test(s)) return Number(s);
+      const digit = { 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+      if (s === "十") return 10;
+      if (s.includes("十")) {
+        const [tensRaw, onesRaw] = s.split("十");
+        const tens = tensRaw ? digit[tensRaw] : 1;
+        const ones = onesRaw ? digit[onesRaw] : 0;
+        return tens * 10 + ones;
+      }
+      return digit[s] ?? null;
+    }
+
+    function normalizeDigits(raw) {
+      return String(raw)
+        .replace(/一/g, "1")
+        .replace(/二/g, "2")
+        .replace(/三/g, "3")
+        .replace(/四/g, "4")
+        .replace(/五/g, "5")
+        .replace(/六/g, "6")
+        .replace(/七/g, "7")
+        .replace(/八/g, "8")
+        .replace(/九/g, "9");
+    }
+
+    function parseTime(raw) {
+      if (!raw) return null;
+      let text = String(raw).trim().replace(/\s+/g, "").replace(/兩/g, "二");
+      text = text.replace(/扣.*$/, "");
+      text = text.replace(/分0?([0-9])秒$/, "分$1秒");
+
+      const colon = text.match(/^(\d+)[:：](\d{1,2})$/);
+      if (colon) return timeObj(Number(colon[1]), Number(colon[2]));
+
+      const minSec = text.match(/^([0-9一二三四五六七八九十]+)分([0-9一二三四五六七八九十]+)秒?$/);
+      if (minSec) return timeObj(chineseNumberToInt(minSec[1]), chineseNumberToInt(minSec[2]));
+
+      const minOnly = text.match(/^([0-9一二三四五六七八九十]+)分$/);
+      if (minOnly) return timeObj(chineseNumberToInt(minOnly[1]), 0);
+
+      const secOnly = text.match(/^([0-9一二三四五六七八九十]+)秒$/);
+      if (secOnly) return timeObj(0, chineseNumberToInt(secOnly[1]));
+
+      const numericText = normalizeDigits(text);
+      if (/^\d{1,4}$/.test(numericText)) {
+        const padded = numericText.padStart(3, "0");
+        const minute = Number(padded.slice(0, -2));
+        const second = Number(padded.slice(-2));
+        return timeObj(minute, second);
+      }
+
+      return null;
+    }
+
+    function parseDeduct(raw) {
+      const match = String(raw || "").match(/扣([0-9一二三四五六七八九十兩]+)秒?/);
+      if (!match) return 0;
+      return chineseNumberToInt(String(match[1]).replace(/兩/g, "二")) || 0;
+    }
+
+    function escapeRegExp(value) {
+      return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function timeObj(minute, second) {
+      if (!Number.isFinite(minute) || !Number.isFinite(second) || second < 0 || second > 59) return null;
+      const total = minute * 60 + second;
+      return { minute, second, total, label: `${minute}:${String(second).padStart(2, "0")}` };
+    }
+
+    function splitCommands(text) {
+      const normalized = normalizeText(text).replace(/請整理|整理/g, ",");
+      const commands = [];
+      const tokens = nameTokens();
+      const rawParts = normalized.split(",").filter(Boolean);
+      const nameOnlyToken = (part) => tokens.find((item) => part === item.token || part.endsWith(item.token));
+      const startsWithTimeOrAction = (part) => /^([0-9一二三四五六七八九十:：分秒]|出發|回來|到達|抵達|回到)/.test(part);
+      const rough = [];
+      let pendingName = null;
+      for (const part of rawParts) {
+        const nameToken = nameOnlyToken(part);
+        if (nameToken && !startsWithTimeOrAction(part)) {
+          if (pendingName) rough.push(pendingName.raw);
+          pendingName = { raw: part, token: nameToken };
+          continue;
+        }
+        if (pendingName && startsWithTimeOrAction(part)) {
+          rough.push(`${pendingName.token.token}${part}`);
+          pendingName = null;
+          continue;
+        }
+        if (pendingName) {
+          rough.push(pendingName.raw);
+          pendingName = null;
+        }
+        rough.push(part);
+      }
+      if (pendingName) rough.push(pendingName.raw);
+      for (const part of rough) {
+        const matches = [];
+        const usedSpans = [];
+        const timePattern = "[0-9一二三四五六七八九十:：分秒]+(?:扣[0-9一二三四五六七八九十兩]+秒?)?";
+        const actionPattern = "出發|回來|到達|抵達|回到";
+        const addMatch = (start, end, raw, name, timeRaw, actionRaw) => {
+          if (usedSpans.some((span) => start < span.end && end > span.start)) return;
+          usedSpans.push({ start, end });
+          const item = [raw, name, timeRaw, normalizeAction(actionRaw || (String(timeRaw).includes("扣") ? "回來" : ""))];
+          item.start = start;
+          matches.push(item);
+        };
+        for (const item of tokens) {
+          const tokenPattern = escapeRegExp(item.token);
+          const re = new RegExp(`${tokenPattern}(?:(${timePattern})(${actionPattern})|(${actionPattern})(${timePattern}))`, "g");
+          let tokenMatch;
+          while ((tokenMatch = re.exec(part)) !== null) {
+            const timeRaw = tokenMatch[1] || tokenMatch[4];
+            const actionRaw = tokenMatch[2] || tokenMatch[3];
+            addMatch(tokenMatch.index, tokenMatch.index + tokenMatch[0].length, tokenMatch[0], item.name, timeRaw, actionRaw);
+          }
+        }
+        const actionMatches = [...part.matchAll(/([0-9一二三四五六七八九十:：分秒]+(?:扣[0-9一二三四五六七八九十兩]+秒?)?)(出發|回來|到達|抵達|回到)?/g)];
+        for (const actionMatch of actionMatches) {
+          if (!actionMatch[2] && !actionMatch[1].includes("扣")) continue;
+          const beforeTime = part.slice(0, actionMatch.index);
+          const nameToken = tokens.find((item) => beforeTime.endsWith(item.token));
+          if (nameToken) {
+            addMatch(actionMatch.index - nameToken.token.length, actionMatch.index + actionMatch[0].length, `${nameToken.token}${actionMatch[0]}`, nameToken.name, actionMatch[1], actionMatch[2] || "回來");
+          }
+        }
+        if (!matches.length) matches.push(...part.matchAll(/([\u4e00-\u9fff]{2,4})([0-9一二三四五六七八九十:：分秒]+(?:扣[0-9一二三四五六七八九十兩]+秒?)?)(出發|回來|到達|抵達|回到)?/g));
+        if (matches.length) {
+          matches.sort((a, b) => (a.start ?? a.index ?? 0) - (b.start ?? b.index ?? 0));
+          for (const m of matches) {
+            const fallbackAction = String(m[2]).includes("扣") ? "回來" : "";
+            const action = normalizeAction(m[3] || fallbackAction);
+            if (!action) {
+              commands.push({ raw: m[0], error: "缺少出發或回來" });
+              continue;
+            }
+            commands.push({ raw: m[0], name: canonicalName(m[1]), timeRaw: m[2], action });
+          }
+        } else if (part.trim()) {
+          commands.push({ raw: part, error: "無法拆成「姓名 + 時間 + 出發/回來」" });
+        }
+      }
+      return commands;
+    }
+
+    function normalizeAction(action) {
+      if (!action) return "";
+      return action === "出發" ? "出發" : "回來";
+    }
+
+    function previewDigits(raw) {
+      const map = {
+        "零": "0", "〇": "0", "○": "0",
+        "一": "1", "壹": "1",
+        "二": "2", "貳": "2", "兩": "2",
+        "三": "3", "參": "3",
+        "四": "4", "肆": "4",
+        "五": "5", "伍": "5",
+        "六": "6", "陸": "6",
+        "七": "7", "柒": "7",
+        "八": "8", "捌": "8",
+        "九": "9", "玖": "9",
+      };
+      return String(raw || "").replace(/[零〇○一壹二貳兩三參四肆五伍六陸七柒八捌九玖]/g, (ch) => map[ch] || ch);
+    }
+
+    function parseCommandPreview(text) {
+      const items = [];
+      const issues = [];
+      const mergeSlowSpeechSegments = (segments) => {
+        const merged = [];
+        for (let i = 0; i < segments.length; i++) {
+          const current = segments[i];
+          const next = segments[i + 1];
+          const currentLooksLikeName = current?.normalized && !/\d/.test(current.normalized) && resolveParsedName(current.normalized).method !== "未辨識";
+          const nextLooksLikeTimeAction = /^(\d{1,4}(出發|回來)|(出發|回來)\d{1,4})$/.test(next?.normalized || "");
+          if (currentLooksLikeName && nextLooksLikeTimeAction) {
+            merged.push({
+              raw: `${current.raw}${next.raw}`,
+              normalized: `${current.normalized}${next.normalized}`,
+            });
+            i++;
+          } else {
+            merged.push(current);
+          }
+        }
+        return merged;
+      };
+      const splitByRoster = (segment) => {
+        const tokens = nameTokens().sort((a, b) => b.token.length - a.token.length);
+        const parts = [];
+        let index = 0;
+        while (index < segment.length) {
+          const match = tokens.find((item) => segment.startsWith(item.token, index));
+          if (!match) return [segment];
+          parts.push(match.token);
+          index += match.token.length;
+        }
+        return parts.length > 1 ? parts : [segment];
+      };
+      const pushItem = (raw, rawName, timeRaw = "-", action = "-", sourceText = "") => {
+        const name = String(rawName || "").replace(/^[,，、;；]+|[,，、;；]+$/g, "").trim();
+        if (!name) return;
+        const resolved = resolveParsedName(name);
+        items.push({
+          raw,
+          sourceText,
+          rawName: name,
+          name: resolved.name,
+          method: resolved.method,
+          score: resolved.score,
+          timeRaw,
+          action,
+        });
+      };
+      const originalSegments = String(text || "")
+        .replace(/請整理|整理/g, ",")
+        .split(/[，,、;；\n\r]+/)
+        .map((raw) => ({
+          raw: raw.trim(),
+          normalized: previewDigits(raw).replace(/\s+/g, ""),
+        }))
+        .filter((segment) => segment.normalized);
+      const segments = mergeSlowSpeechSegments(originalSegments);
+      for (const segment of segments) {
+        let matched = false;
+        const re = /(.+?)(?:(\d{1,4})(出發|回來)|(出發|回來)(\d{1,4}))/g;
+        let match;
+        while ((match = re.exec(segment.normalized)) !== null) {
+          matched = true;
+          const rawName = match[1];
+          const timeRaw = match[2] || match[5];
+          const action = match[3] || match[4];
+          pushItem(match[0], rawName, timeRaw, action, segment.raw);
+        }
+        if (!matched && segment.normalized) {
+          for (const namePart of splitByRoster(segment.normalized)) {
+            pushItem(namePart, namePart, "-", "-", segment.raw);
+          }
+        }
+      }
+      if (!items.length && originalSegments.length) {
+        const raw = originalSegments.map((segment) => segment.raw).join("，");
+        issues.push({ raw, sourceText: raw, issue: "無法拆成「姓名 + 時間 + 出發/回來」" });
+      }
+      return { items, issues };
+    }
+
+    function renderParsePreview() {
+      const box = el("parsePreview");
+      const table = el("parsePreviewTable");
+      const count = el("parsePreviewCount");
+      const toggle = el("parseToggleBtn");
+      if (!box || !table || !count) return;
+      if (!parseState.items.length && !parseState.issues.length) {
+        box.hidden = true;
+        table.innerHTML = "";
+        count.textContent = "0 筆";
+        return;
+      }
+      box.hidden = false;
+      count.textContent = `${parseState.items.length} 筆`;
+      if (toggle) toggle.textContent = box.classList.contains("collapsed") ? "展開" : "收起";
+      const rows = parseState.items.map((item, index) => {
+        const needsCorrection = item.method !== "完全符合" || item.rawName !== item.name;
+        const rawNameCell = needsCorrection
+          ? `<button class="parse-correct-btn" type="button" data-parse-correct="${index}">${escapeHtml(item.rawName)}</button>`
+          : escapeHtml(item.rawName);
+        const methodText = `${escapeHtml(item.method)}${["模糊", "注音模糊"].includes(item.method) ? ` ${item.score}%` : ""}`;
+        const methodCell = item.method === "未辨識"
+          ? `${methodText}<br><button class="parse-delete-btn" type="button" data-parse-delete="${index}">刪除</button>`
+          : methodText;
+        return `
+        <div>${rawNameCell}</div>
+        <div>${escapeHtml(item.timeRaw)}</div>
+        <div>${escapeHtml(item.action)}</div>
+        <div>${escapeHtml(item.name)}</div>
+        <div class="parse-method">${methodCell}</div>
+      `;
+      }).join("");
+      const issues = parseState.issues.map((item, index) => `
+        <div>${escapeHtml(item.raw)}</div><div>-</div><div>-</div><div>-</div><div class="parse-method">${escapeHtml(item.issue)}<br><button class="parse-delete-btn" type="button" data-parse-issue-delete="${index}">刪除</button></div>
+      `).join("");
+      table.innerHTML = `
+        <div class="th">原始姓名</div>
+        <div class="th">時間</div>
+        <div class="th">動作</div>
+        <div class="th">判定姓名</div>
+        <div class="th">方式</div>
+        ${rows}${issues}
+      `;
+      table.querySelectorAll("[data-parse-correct]").forEach((button) => {
+        button.addEventListener("click", () => openCorrectionDialog(Number(button.dataset.parseCorrect)));
+      });
+      table.querySelectorAll("[data-parse-delete]").forEach((button) => {
+        button.addEventListener("click", () => removeParsedRawText(Number(button.dataset.parseDelete)));
+      });
+      table.querySelectorAll("[data-parse-issue-delete]").forEach((button) => {
+        button.addEventListener("click", () => removeParsedIssueText(Number(button.dataset.parseIssueDelete)));
+      });
+    }
+
+    function runCommandPreview() {
+      const source = el("commandBox").value;
+      const result = parseCommandPreview(source);
+      parseState.source = source;
+      parseState.items = result.items;
+      parseState.issues = result.issues;
+      renderParsePreview();
+      setStatus(`解析完成：${parseState.items.length} 筆。確認無誤後可按「整理」。`, parseState.issues.length ? "bad" : "good");
+    }
+
+    function setParsePreviewCollapsed(collapsed) {
+      const box = el("parsePreview");
+      const toggle = el("parseToggleBtn");
+      if (!box) return;
+      box.classList.toggle("collapsed", collapsed);
+      if (toggle) toggle.textContent = collapsed ? "展開" : "收起";
+    }
+
+    function addCorrectionAlias(rightName, wrongName) {
+      const right = String(rightName || "").trim();
+      const wrong = String(wrongName || "").replace(/[0-9０-９]+$/g, "").trim();
+      const box = el("correctionBox");
+      if (!right || !wrong || right === wrong || !box) return false;
+      const lines = box.value.split(/\n/);
+      let found = false;
+      const next = lines.map((line) => {
+        if (!line.trim() || !line.includes("=")) return line;
+        const eqIndex = line.indexOf("=");
+        const currentRight = line.slice(0, eqIndex).trim();
+        if (currentRight !== right) return line;
+        found = true;
+        const wrongs = splitAliasList(line.slice(eqIndex + 1));
+        if (!wrongs.includes(wrong)) wrongs.push(wrong);
+        return `${right}=${wrongs.join(",")}`;
+      });
+      if (!found) next.push(`${right}=${wrong}`);
+      box.value = next.filter((line, index) => line.trim() || index < next.length - 1).join("\n").trim();
+      box.dispatchEvent(new Event("input", { bubbles: true }));
+      return true;
+    }
+
+    function openCorrectionDialog(index) {
+      const item = parseState.items[index];
+      if (!item) return;
+      const dialog = el("detailDialog");
+      const title = el("detailTitle");
+      const content = el("detailContent");
+      if (!dialog || !title || !content) return;
+      title.textContent = "標記正確姓名";
+      const options = rosterNames().map((name) =>
+        `<option value="${escapeHtml(name)}"${name === item.name ? " selected" : ""}>${escapeHtml(name)}</option>`
+      ).join("");
+      content.innerHTML = `
+        <div class="dialog-row"><span>原始姓名</span><strong>${escapeHtml(item.rawName)}</strong></div>
+        <label for="correctionNameSelect" style="margin-top:12px;">正確姓名</label>
+        <select id="correctionNameSelect">${options}</select>
+        <p class="small">確認後會把「${escapeHtml(item.rawName)}」加入學生名單校正；按「儲存」才會同步到雲端。</p>
+        <button id="confirmCorrectionBtn" type="button" style="width:100%; margin-top:10px;">加入校正</button>
+      `;
+      dialog.classList.add("show");
+      el("confirmCorrectionBtn")?.addEventListener("click", () => {
+        const selected = el("correctionNameSelect")?.value || "";
+        if (addCorrectionAlias(selected, item.rawName)) {
+          dialog.classList.remove("show");
+          runCommandPreview();
+          setStatus(`已加入校正：${item.rawName} → ${selected}。記得按「儲存」同步到雲端。`, "good");
+        }
+      });
+    }
+
+    function removeParsedRawText(index) {
+      const item = parseState.items[index];
+      const box = el("commandBox");
+      if (!item || !box) return;
+      removeTextCandidate([item.sourceText, item.raw, item.rawName], box);
+      setStatus(`已刪除非口令文字：${item.rawName}`, "good");
+    }
+
+    function removeParsedIssueText(index) {
+      const item = parseState.issues[index];
+      const box = el("commandBox");
+      if (!item || !box) return;
+      removeTextCandidate([item.sourceText, item.raw], box);
+      setStatus(`已刪除無法解析文字：${item.raw}`, "good");
+    }
+
+    function removeTextCandidate(candidates, box) {
+      const cleanCandidates = candidates.filter(Boolean).sort((a, b) => b.length - a.length);
+      let text = box.value;
+      for (const candidate of cleanCandidates) {
+        const pattern = new RegExp(`(^|[，,、;；\\s]+)${escapeRegExp(candidate)}([，,、;；\\s]+|$)`);
+        if (pattern.test(text)) {
+          text = text.replace(pattern, (match, before, after) => {
+            if (!before && !after) return "";
+            if (!before) return after.replace(/^[，,、;；\s]+/, "");
+            if (!after) return before.replace(/[，,、;；\s]+$/, "");
+            return before;
+          });
+          break;
+        }
+        if (text.includes(candidate)) {
+          text = text.replace(candidate, "");
+          break;
+        }
+      }
+      parseState._suppressClear = true;
+      box.value = text.replace(/[，,、;；\s]+$/g, "").replace(/^[，,、;；\s]+/g, "");
+      clearParsePreview();
+      runCommandPreview();
+      setTimeout(() => { parseState._suppressClear = false; }, 250);
+    }
+
+    function clearParsePreview() {
+      parseState.source = "";
+      parseState.items = [];
+      parseState.issues = [];
+      renderParsePreview();
+    }
+
+    function parsedEntriesFromPreview() {
+      state.entries = [];
+      state.issues = parseState.issues.slice();
+      state.summaryMetaOverrides = {};
+      for (const item of parseState.items) {
+        if (!item.timeRaw || item.timeRaw === "-" || !item.action || item.action === "-") continue;
+        const parsedTime = parseTime(item.timeRaw);
+        if (!parsedTime) {
+          state.issues.push({ raw: item.raw, issue: `時間無法判讀：${item.timeRaw}` });
+          continue;
+        }
+        addEntry(item.name, item.action, parsedTime, item.raw, false, parseDeduct(item.timeRaw));
+      }
+      render();
+      setParsePreviewCollapsed(true);
+      checkCourseIntervals();
+      const ok = state.entries.length;
+      const bad = state.issues.length;
+      setStatus(`整理完成：${ok} 筆成功${bad ? `，${bad} 筆提醒` : ""}。`, bad ? "bad" : "good");
+    }
+
+    function parseAll() {
+      if (parseState.items.length && parseState.source === el("commandBox").value) {
+        parsedEntriesFromPreview();
+        return;
+      }
+      state.entries = [];
+      state.issues = [];
+      state.summaryMetaOverrides = {};
+      const commands = splitCommands(el("commandBox").value);
+      for (const command of commands) {
+        if (command.error) {
+          state.issues.push({ raw: command.raw, issue: command.error });
+          continue;
+        }
+        const parsedTime = parseTime(command.timeRaw);
+        if (!parsedTime) {
+          state.issues.push({ raw: command.raw, issue: `時間無法判讀：${command.timeRaw}` });
+          continue;
+        }
+        addEntry(command.name, command.action, parsedTime, command.raw, false, parseDeduct(command.timeRaw));
+      }
+      render();
+      setParsePreviewCollapsed(true);
+      checkCourseIntervals();
+      const ok = state.entries.length;
+      const bad = state.issues.length;
+      setStatus(`已整理 ${ok} 筆紀錄${bad ? `，有 ${bad} 筆需要確認` : ""}。`, bad ? "bad" : "good");
+    }
+
+    function addEntry(name, action, parsedTime, raw, shouldRender = true, deductSeconds = 0) {
+      state.entries.push({
+        id: `${Date.now()}-${Math.random()}`,
+        name,
+        action,
+        time: parsedTime,
+        deductSeconds,
+        raw: raw || `${name}${parsedTime.label}${action}`,
+      });
+      if (shouldRender) {
+        render();
+        setStatus(`已加入：${name} ${parsedTime.label} ${action}`, "good");
+      }
+    }
+
+    function actionIndex(entry, entries = state.entries) {
+      return entries
+        .filter((item) => item.name === entry.name && item.action === entry.action)
+        .findIndex((item) => item.id === entry.id) + 1;
+    }
+
+    function grouped(entries = state.entries) {
+      const names = [...new Set(entries.map((entry) => entry.name))];
+      return names.map((name) => {
+        const trips = Array.from({ length: maxTrips }, () => ({ start: null, back: null }));
+        for (const entry of entries.filter((item) => item.name === name)) {
+          const index = actionIndex(entry, entries) - 1;
+          if (index >= 0 && index < maxTrips) trips[index][entry.action === "出發" ? "start" : "back"] = entry;
+        }
+        return { name, trips };
+      });
+    }
+
+    function courseGroupLetter(value) {
+      const index = Math.max(0, Math.min(COURSE_GROUPS.length - 1, Number(value || 1) - 1));
+      return COURSE_GROUPS[index] || "A";
+    }
+
+    function defaultCourseGroupValue() {
+      return Math.max(1, Math.min(COURSE_GROUPS.length, Number(el("defaultCourseGroup")?.value) || 1));
+    }
+
+    function sessionGroupLabel() {
+      const value = Math.max(1, Math.min(9, Number(el("sessionGroup")?.value) || 1));
+      return `第${value}組`;
+    }
+
+    function currentResultDate() {
+      return el("resultDate")?.value || new Date().toISOString().slice(0, 10);
+    }
+
+    function collectMixRowDrafts() {
+      const rows = [];
+      document.querySelectorAll("#mixRows .mix-row").forEach((row, index) => {
+        rows[index] = {
+          group: Number(el(`mixGroup${index}`)?.value) || (index === 0 ? defaultCourseGroupValue() : index + 1),
+          item: el(`mixItem${index}`)?.value || "",
+          timeRaw: el(`mixTime${index}`)?.value || "",
+          intervalRaw: el(`mixInterval${index}`)?.value || "",
+        };
+      });
+      return rows;
+    }
+
+    function firstAvailableCourseGroup(used = new Set()) {
+      for (let value = 1; value <= COURSE_GROUPS.length; value++) {
+        if (!used.has(value)) return value;
+      }
+      return 1;
+    }
+
+    function activeCoursePlanRows() {
+      const rows = mixPlanRows();
+      const seen = new Set();
+      return rows.filter((row) => {
+        if (!row?.group || seen.has(row.group)) return false;
+        seen.add(row.group);
+        return true;
+      });
+    }
+
+    function mixPlanRows() {
+      const mixed = el("mixedYes")?.checked;
+      const count = mixed
+        ? Math.max(2, Math.min(COURSE_GROUPS.length, Number(el("mixCount")?.value) || 2))
+        : 1;
+      const defaultGroup = defaultCourseGroupValue();
+      return Array.from({ length: count }, (_, index) => {
+        const group = index === 0
+          ? defaultGroup
+          : Math.max(1, Math.min(COURSE_GROUPS.length, Number(el(`mixGroup${index}`)?.value) || index + 1));
+        const groupLabel = courseGroupLetter(group);
+        const item = el(`mixItem${index}`)?.value.trim() || `課表內容${groupLabel}`;
+        const timeRaw = el(`mixTime${index}`)?.value.trim() || "";
+        const intervalRaw = el(`mixInterval${index}`)?.value.trim() || "";
+        return {
+          index,
+          group,
+          groupLabel,
+          item,
+          timeRaw,
+          time: parseTime(timeRaw),
+          intervalRaw,
+        };
+      });
+    }
+
+    function defaultPersonOrder(entries = state.entries) {
+      const starts = entries
+        .filter((entry) => entry.action === "出發")
+        .map((entry) => ({ name: entry.name, total: entryTotal(entry) }))
+        .filter((entry) => Number.isFinite(entry.total))
+        .sort((a, b) => a.total - b.total);
+      const map = {};
+      for (const start of starts) {
+        if (!map[start.name]) map[start.name] = Object.keys(map).length + 1;
+      }
+      return map;
+    }
+
+    function summaryMetaForName(name, entries = state.entries) {
+      const defaults = defaultPersonOrder(entries);
+      const personOrder = Number(state.summaryMetaOverrides[name]?.personOrder || defaults[name] || "");
+      const plan = activeCoursePlanRows();
+      const overriddenGroup = Number(state.summaryMetaOverrides[name]?.courseGroup || 0);
+      const defaultGroup = defaultCourseGroupValue();
+      const chosenGroup = plan.some((row) => row.group === overriddenGroup) ? overriddenGroup : defaultGroup;
+      const planRow = plan.find((row) => row.group === chosenGroup) || plan[0] || {};
+      return {
+        personOrder: personOrder || "",
+        courseGroup: planRow.group || defaultGroup,
+        item: planRow.item || "",
+        timeRaw: planRow.timeRaw || "",
+        time: planRow.time || null,
+        planIndex: Number.isFinite(planRow.index) ? planRow.index : 0,
+      };
+    }
+
+    function checkCourseIntervals() {
+      const plan = mixPlanRows();
+      if (!plan.some((row) => row.time)) return;
+      const groupedRows = grouped();
+      for (const { name, trips } of groupedRows) {
+        const meta = summaryMetaForName(name);
+        const expected = meta.time?.total;
+        const firstStart = entryTotal(trips[0]?.start);
+        const secondStart = entryTotal(trips[1]?.start);
+        if (!Number.isFinite(expected) || !Number.isFinite(firstStart) || !Number.isFinite(secondStart)) continue;
+        const actual = secondStart - firstStart;
+        if (actual <= 0 || actual === expected) continue;
+        const confirmed = confirm(`${name}：${meta.item || "課表內容"} 設定含休是 ${fmt(expected)}，但實際出發間隔是 ${fmt(actual)}。要把含休改成 ${fmt(actual)} 嗎？`);
+        if (confirmed) {
+          const input = el(`mixTime${meta.planIndex}`);
+          if (input) input.value = `${Math.floor(actual / 60)}${String(actual % 60).padStart(2, "0")}`;
+          render();
+        }
+      }
+    }
+
+    function swimmerMetrics(trips) {
+      const completed = trips
+        .map((trip, index) => {
+          if (!trip.back) return null;
+          if (!trip.start && !(trip.back.deductSeconds || 0)) return null;
+          const backTotal = entryTotal(trip.back);
+          const startTotal = entryTotal(trip.start);
+          if (!Number.isFinite(backTotal) || (trip.start && !Number.isFinite(startTotal))) return null;
+          const seconds = trip.start
+            ? backTotal - startTotal - (trip.back.deductSeconds || 0)
+            : backTotal - (trip.back.deductSeconds || 0);
+          return seconds >= 0 ? { index, seconds } : null;
+        })
+        .filter(Boolean);
+      if (!completed.length) return { completed, pb: "", latest: "", improvement: "", bestTrip: "" };
+      const pbItem = completed.reduce((best, item) => item.seconds < best.seconds ? item : best, completed[0]);
+      const first = completed[0].seconds;
+      const latest = completed[completed.length - 1].seconds;
+      return {
+        completed,
+        pb: pbItem.seconds,
+        latest,
+        improvement: first - latest,
+        bestTrip: `第${pbItem.index + 1}趟`,
+      };
+    }
+
+    function personalRankMap(results) {
+      const ranked = results
+        .map((seconds, index) => seconds !== null && seconds >= 0 ? { index, seconds } : null)
+        .filter(Boolean)
+        .sort((a, b) => a.seconds - b.seconds);
+      const map = new Map();
+      let rank = 0;
+      let previous = null;
+      ranked.forEach((item, index) => {
+        if (item.seconds !== previous) rank = index + 1;
+        previous = item.seconds;
+        map.set(item.index, rank);
+      });
+      return map;
+    }
+
+    function courseIntervalDiffMap(trips, expectedSeconds) {
+      const map = new Map();
+      if (!Number.isFinite(expectedSeconds) || expectedSeconds <= 0) return map;
+      for (let index = 1; index < trips.length; index++) {
+        const previousStart = entryTotal(trips[index - 1]?.start);
+        const currentStart = entryTotal(trips[index]?.start);
+        if (!Number.isFinite(previousStart) || !Number.isFinite(currentStart)) continue;
+        const actualInterval = currentStart - previousStart;
+        if (!Number.isFinite(actualInterval) || actualInterval <= 0) continue;
+        const diff = actualInterval - expectedSeconds;
+        if (diff !== 0) map.set(index, diff);
+      }
+      return map;
+    }
+
+    function fmt(total) {
+      if (total === null || total === undefined || total === "") return "";
+      const sign = total < 0 ? "-" : "";
+      const abs = Math.abs(total);
+      return `${sign}${Math.floor(abs / 60)}:${String(abs % 60).padStart(2, "0")}`;
+    }
+
+    function entryTotal(entry) {
+      if (!entry?.time) return null;
+      if (Number.isFinite(entry.time.total)) return entry.time.total;
+      const normalized = normalizeTimeObject(entry.time);
+      return Number.isFinite(normalized?.total) ? normalized.total : null;
+    }
+
+    function maybeAskCourseGroupChange(name) {
+      if (!el("mixedYes")?.checked) return;
+      const plan = activeCoursePlanRows();
+      if (plan.length <= 1) return;
+      const currentGroup = summaryMetaForName(name).courseGroup;
+      const alternatives = plan.filter((row) => row.group !== currentGroup);
+      if (!alternatives.length) return;
+
+      if (alternatives.length === 1) {
+        const target = alternatives[0];
+        if (confirm(`是否要把 ${name} 改到 ${target.groupLabel} 課表？`)) {
+          state.summaryMetaOverrides[name] ||= {};
+          state.summaryMetaOverrides[name].courseGroup = target.group;
+        }
+        return;
+      }
+
+      if (!confirm(`是否要更動 ${name} 的課表組？`)) return;
+      const labels = alternatives.map((row) => row.groupLabel).join(" / ");
+      const answer = (prompt(`請輸入要改成哪一組：${labels}`, alternatives[0].groupLabel) || "").trim().toUpperCase();
+      const target = alternatives.find((row) => row.groupLabel === answer || String(row.group) === answer);
+      if (target) {
+        state.summaryMetaOverrides[name] ||= {};
+        state.summaryMetaOverrides[name].courseGroup = target.group;
+      } else if (answer) {
+        alert(`沒有找到 ${answer} 課表，課表組維持不變。`);
+      }
+    }
+
+    function render() {
+      const rows = grouped();
+      el("summaryTable").innerHTML = `
+        <thead>
+          <tr>
+            <th>組</th><th>出發序</th><th>課表組</th><th>課表內容</th><th>含休</th>
+            <th>姓名</th>
+            ${Array.from({ length: maxTrips }, (_, i) => `<th>第${i + 1}趟成績</th>`).join("")}
+            <th>完成</th><th>PB</th><th>PB趟次</th><th>最新</th><th>進步</th><th>平均</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.length ? rows.map(({ name, trips }) => {
+            const meta = summaryMetaForName(name);
+            const results = trips.map((trip) => {
+              if (!trip.back) return null;
+              if (!trip.start && !(trip.back.deductSeconds || 0)) return null;
+              const backTotal = entryTotal(trip.back);
+              const startTotal = entryTotal(trip.start);
+              if (!Number.isFinite(backTotal) || (trip.start && !Number.isFinite(startTotal))) return null;
+              return trip.start ? backTotal - startTotal - (trip.back.deductSeconds || 0) : backTotal - (trip.back.deductSeconds || 0);
+            });
+            const valid = results.filter((v) => v !== null && v >= 0);
+            const personalRanks = personalRankMap(results);
+            const intervalDiffs = courseIntervalDiffMap(trips, meta.time?.total);
+            const metrics = swimmerMetrics(trips);
+            const avg = valid.length ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : "";
+            const courseOptions = activeCoursePlanRows().map((row) =>
+              `<option value="${row.group}"${meta.courseGroup === row.group ? " selected" : ""}>${row.groupLabel}</option>`
+            ).join("");
+            return `<tr>
+              <td>${escapeHtml(sessionGroupLabel())}</td>
+              <td><input class="person-order-input" data-person-order="${escapeHtml(name)}" type="number" min="1" value="${escapeHtml(meta.personOrder)}"></td>
+              <td><select class="course-group-select" data-course-group="${escapeHtml(name)}">${courseOptions}</select></td>
+              <td>${escapeHtml(meta.item)}</td>
+              <td>${escapeHtml(meta.timeRaw)}</td>
+              <td><strong>${escapeHtml(name)}</strong></td>
+              ${trips.map((trip, i) => {
+                const result = results[i];
+                const bad = result !== null && result < 0;
+                const rank = result !== null && result >= 0 ? personalRanks.get(i) : "";
+                const cycleDiff = intervalDiffs.get(i);
+                const cycleDiffLabel = Number.isFinite(cycleDiff) ? `${cycleDiff > 0 ? "+" : ""}${cycleDiff}秒` : "";
+                const cycleDiffClass = cycleDiff > 0 ? "cycle-diff-plus" : "cycle-diff-minus";
+                const cycleDiffTitle = Number.isFinite(cycleDiff)
+                  ? `出發週期差：本趟出發 - 上一趟出發，比含休${cycleDiff > 0 ? "多" : "少"}${Math.abs(cycleDiff)}秒`
+                  : "";
+                const resultLabel = bad ? "回來早於出發" : fmt(result);
+                const detailArgs = [
+                  name,
+                  i + 1,
+                  trip.start ? trip.start.time.label : "",
+                  trip.back ? `${trip.back.time.label}${trip.back.deductSeconds ? ` 扣${trip.back.deductSeconds}秒` : ""}` : "",
+                  resultLabel,
+                  rank ? `#${rank}` : "",
+                ].map((value) => JSON.stringify(value)).join(",");
+                const rankClass = rank === 1 ? "rank-1" : rank === 2 ? "rank-2" : rank === 3 ? "rank-3" : "rank-4up";
+                return `<td class="${bad ? "issue" : "result"}">${
+                  resultLabel
+                    ? `<button class="result-btn" onclick='showTripDetail(${detailArgs})'>${resultLabel}${rank ? `<span class="rank-badge ${rankClass}">#${rank}</span>` : ""}${cycleDiffLabel ? `<span class="cycle-diff-badge ${cycleDiffClass}" title="${escapeHtml(cycleDiffTitle)}">${cycleDiffLabel}</span>` : ""}</button>`
+                    : ""
+                }</td>`;
+              }).join("")}
+              <td>${valid.length}</td>
+              <td class="result">${fmt(metrics.pb)}</td>
+              <td>${metrics.bestTrip}</td>
+              <td>${fmt(metrics.latest)}</td>
+              <td class="${metrics.improvement > 0 ? "metric-good" : "metric-muted"}">${metrics.improvement === "" ? "" : (metrics.improvement > 0 ? `+${metrics.improvement}秒` : `${metrics.improvement}秒`)}</td>
+              <td>${fmt(avg)}</td>
+            </tr>`;
+          }).join("") : `<tr><td colspan="18">尚未整理。把口令貼到左邊後按「整理」。</td></tr>`}
+        </tbody>`;
+
+      el("summaryTable").querySelectorAll("[data-person-order]").forEach((input) => {
+        input.addEventListener("change", () => {
+          const name = input.dataset.personOrder;
+          state.summaryMetaOverrides[name] ||= {};
+          state.summaryMetaOverrides[name].personOrder = Number(input.value) || "";
+          maybeAskCourseGroupChange(name);
+          render();
+        });
+      });
+      el("summaryTable").querySelectorAll("[data-course-group]").forEach((select) => {
+        select.addEventListener("change", () => {
+          const name = select.dataset.courseGroup;
+          state.summaryMetaOverrides[name] ||= {};
+          state.summaryMetaOverrides[name].courseGroup = Number(select.value) || 1;
+          render();
+        });
+      });
+
+      const rawRows = state.entries.map((entry, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${escapeHtml(entry.name)}</td>
+          <td><span class="pill">${entry.action}</span></td>
+          <td>${entry.time.label}</td>
+          <td>${actionIndex(entry)}</td>
+          <td>${escapeHtml(entry.raw)}</td>
+        </tr>`).join("");
+      const issueRows = state.issues.map((issue) => `
+        <tr>
+          <td class="issue">?</td>
+          <td colspan="4" class="issue">${escapeHtml(issue.issue)}</td>
+          <td>${escapeHtml(issue.raw)}</td>
+        </tr>`).join("");
+
+      el("rawTable").innerHTML = `
+        <thead><tr><th>#</th><th>姓名</th><th>動作</th><th>時間</th><th>第幾次</th><th>原始文字</th></tr></thead>
+        <tbody>${rawRows || issueRows ? rawRows + issueRows : `<tr><td colspan="6">尚無紀錄。</td></tr>`}</tbody>`;
+    }
+
+    function renderSnapshotList() {
+      const list = el("snapshotList");
+      if (!list) return;
+      if (!snapshots.length) {
+        list.innerHTML = `<div class="status">尚無暫存。每記完一組，按「暫存本組並清空」。</div>`;
+        return;
+      }
+
+      list.innerHTML = snapshots.map((snapshot, index) => {
+        const summaryRows = snapshot.summaryTableRows?.length
+          ? snapshot.summaryTableRows
+          : currentSummaryTableRows(snapshot.entries || []);
+
+        return `
+          <details class="snapshot-card">
+            <summary><span>${escapeHtml(snapshotLabel(snapshot, index))}</span><span>${escapeHtml(snapshot.date || "")}</span></summary>
+            <div class="snapshot-body">
+              <details class="snapshot-raw">
+                <summary class="save-label">原始語音輸入文字</summary>
+                <textarea readonly>${escapeHtml(snapshot.commandText || "")}</textarea>
+              </details>
+              <div>
+                <div class="save-label" style="margin-bottom:8px;">暫存整理表</div>
+                <div class="snapshot-preview">${tableHtmlFromRows(summaryRows)}</div>
+              </div>
+              <div class="button-row">
+                <button data-load-snapshot="${index}" class="secondary">載入這組</button>
+                <button data-delete-snapshot="${index}" class="danger">刪除這組</button>
+              </div>
+            </div>
+          </details>`;
+      }).join("");
+
+      list.querySelectorAll("[data-load-snapshot]").forEach((button) => {
+        button.addEventListener("click", () => loadSnapshot(Number(button.dataset.loadSnapshot)));
+      });
+      list.querySelectorAll("[data-delete-snapshot]").forEach((button) => {
+        button.addEventListener("click", () => deleteSnapshot(Number(button.dataset.deleteSnapshot)));
+      });
+    }
+
+    function entriesForNames(entries, names) {
+      const set = new Set(names);
+      return entries.filter((entry) => set.has(entry.name));
+    }
+
+    function snapshotNamesForLane(snapshot, lane) {
+      const assignments = snapshot?.assignments || {};
+      return snapshotNames(snapshot).filter((name) => assignments[name] === lane);
+    }
+
+    function tableHtmlFromRows(rows) {
+      if (!rows.length) return "";
+      const [headers, ...bodyRows] = rows;
+      return `
+        <div class="table-wrap">
+          <table>
+            <thead><tr>${headers.map((cell) => `<th>${escapeHtml(cell)}</th>`).join("")}</tr></thead>
+            <tbody>${bodyRows.length ? bodyRows.map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("") : `<tr><td colspan="${headers.length}">尚無學生。</td></tr>`}</tbody>
+          </table>
+        </div>`;
+    }
+
+    function snapshotFinalGroups(snapshot) {
+      return ["A", "B", "C", "D"].map((lane) => {
+        const names = snapshotNamesForLane(snapshot, lane);
+        const workout = snapshot.lanes[lane]?.workout || "";
+        if (!names.length && !workout.trim()) return null;
+        return {
+          lane,
+          workout,
+          rows: finalSummaryRows(entriesForNames(snapshot.entries, names)),
+        };
+      }).filter(Boolean);
+    }
+
+    function renderSnapshotGroupedPreview(snapshot) {
+      const groups = snapshotFinalGroups(snapshot);
+      if (!groups.length) return `<div class="status">選擇學生本組課表後，這裡會依 A/B/C/D 分組顯示整理表。</div>`;
+      return groups.map(({ lane, workout, rows }) => `
+          <div class="snapshot-preview-group">
+            <div class="snapshot-preview-title">${lane} 組</div>
+            <div class="snapshot-preview-workout">${escapeHtml(workout || "尚未填課表內容")}</div>
+            ${tableHtmlFromRows(rows)}
+          </div>`).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function showTripDetail(name, tripNumber, startLabel, backLabel, resultLabel, rankLabel) {
+      el("detailTitle").textContent = `${name} 第${tripNumber}趟`;
+      el("detailContent").innerHTML = `
+        <div class="dialog-row"><span>出發時間</span><strong>${escapeHtml(startLabel || "未記錄")}</strong></div>
+        <div class="dialog-row"><span>回來時間</span><strong>${escapeHtml(backLabel || "未記錄")}</strong></div>
+        <div class="dialog-row"><span>本趟成績</span><strong>${escapeHtml(resultLabel || "未完成")}</strong></div>
+        <div class="dialog-row"><span>本趟排名</span><strong>${escapeHtml(rankLabel || "-")}</strong></div>
+      `;
+      el("detailDialog").classList.add("show");
+    }
+
+    function setupSpeech() {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRecognition) return null;
+      const rec = new SpeechRecognition();
+      rec.lang = "zh-TW";
+      rec.continuous = true;
+      rec.interimResults = false;
+      rec.onresult = (event) => {
+        let added = "";
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (!event.results[i].isFinal) continue;
+          added += event.results[i][0].transcript + "，";
+        }
+        if (added) {
+          el("commandBox").value += added;
+          if (/請整理|整理/.test(added)) parseAll();
+          else setStatus(`已加入語音文字：${added}`, "good");
+        }
+      };
+      rec.onerror = (event) => setStatus(`語音錯誤：${event.error}。也可以直接用鍵盤語音輸入到文字框。`, "bad");
+      rec.onend = () => {
+        if (listening) {
+          try { rec.start(); } catch {}
+        }
+      };
+      return rec;
+    }
+
+    el("listenBtn").addEventListener("click", () => {
+      recognition ||= setupSpeech();
+      if (!recognition) {
+        setStatus("這個瀏覽器不支援內建語音辨識。請直接點文字框，用手機或電腦鍵盤的語音輸入。", "bad");
+        return;
+      }
+      listening = true;
+      try { recognition.start(); } catch {}
+      el("listenBtn").disabled = true;
+      el("stopBtn").disabled = false;
+      setStatus("正在聽。你可以一直講，最後講「請整理」或按整理。", "good");
+    });
+
+    el("stopBtn").addEventListener("click", () => {
+      listening = false;
+      try { recognition?.stop(); } catch {}
+      el("listenBtn").disabled = false;
+      el("stopBtn").disabled = true;
+      setStatus("已停止語音。");
+    });
+
+    el("parseBtn").addEventListener("click", parseAll);
+    el("clearTextBtn").addEventListener("click", () => {
+      el("commandBox").value = "";
+      clearParsePreview();
+      setStatus("已清空文字。");
+    });
+    el("loadExampleBtn").addEventListener("click", () => {
+      el("commandBox").value = "林小福000出發，方小美005出發，王小明010出發，林小福110回來，方小美120回來，王小明130回來，請整理";
+      const charCount = el("charCount");
+      if (charCount) charCount.textContent = `${el("commandBox").value.length} / 300`;
+      setStatus("已載入口令範例。", "good");
+    });
+    el("saveSettingsBtn").addEventListener("click", saveSettings);
+    document.querySelectorAll(".saveSettingsControl").forEach((button) => button.addEventListener("click", saveSettings));
+    document.querySelectorAll(".downloadSettingsControl").forEach((button) => button.addEventListener("click", downloadSettings));
+    document.querySelectorAll(".importSettingsControl").forEach((button) => button.addEventListener("click", requestImportSettings));
+    el("settingsImportInput").addEventListener("change", (event) => importSettingsFile(event.target.files?.[0]));
+    ["rosterBox", "correctionBox", "aliasBox"].forEach((id) => {
+      el(id).addEventListener("input", queueSettingsAutosave);
+      el(id).addEventListener("change", () => saveSettingsLocal(false));
+    });
+    function renderMixRows() {
+      const mixed = el("mixedYes").checked;
+      const mixCountInput = el("mixCount");
+      if (mixCountInput) mixCountInput.max = String(COURSE_GROUPS.length);
+      const requestedCount = Number(mixCountInput?.value) || 2;
+      const count = mixed ? Math.max(2, Math.min(COURSE_GROUPS.length, requestedCount)) : 1;
+      if (mixCountInput && Number(mixCountInput.value) !== count) mixCountInput.value = String(count);
+      el("mixCountWrap").hidden = !mixed;
+
+      const drafts = collectMixRowDrafts();
+      const defaultCourseGroup = el("defaultCourseGroup");
+      if (defaultCourseGroup) {
+        const current = defaultCourseGroupValue();
+        defaultCourseGroup.innerHTML = COURSE_GROUPS.map((label, index) =>
+          `<option value="${index + 1}">${label}</option>`
+        ).join("");
+        defaultCourseGroup.value = String(current);
+      }
+
+      const defaultGroup = defaultCourseGroupValue();
+      const used = new Set([defaultGroup]);
+      const rowGroups = Array.from({ length: count }, (_, index) => {
+        if (index === 0) return defaultGroup;
+        let group = Number(drafts[index]?.group) || firstAvailableCourseGroup(used);
+        if (group === defaultGroup || used.has(group) || group < 1 || group > COURSE_GROUPS.length) {
+          group = firstAvailableCourseGroup(used);
+        }
+        used.add(group);
+        return group;
+      });
+
+      const groupOptions = (selectedGroup, rowIndex) => COURSE_GROUPS.map((label, index) => {
+        const value = index + 1;
+        const usedByOtherRow = rowGroups.some((group, groupIndex) => groupIndex !== rowIndex && group === value);
+        const disabled = rowIndex > 0 && usedByOtherRow ? " disabled" : "";
+        return `<option value="${value}"${selectedGroup === value ? " selected" : ""}${disabled}>${label}</option>`;
+      }).join("");
+
+      el("mixRows").innerHTML = rowGroups.map((group, index) => `
+        <div class="mix-row">
+          ${index === 0
+            ? `<div class="mix-group-label">${courseGroupLetter(group)}</div>`
+            : `<select id="mixGroup${index}" class="mix-group-select" data-mix-group-index="${index}" aria-label="課表組">${groupOptions(group, index)}</select>`}
+          <div>
+            <label for="mixItem${index}">課表內容</label>
+            <div class="mix-item-control">
+              <input id="mixItem${index}" type="text" placeholder="例：100自" value="${escapeHtml(drafts[index]?.item || "")}">
+              <select data-mix-item-select="${index}" aria-label="常用項目">
+                <option value="">選</option>
+                <option value="100自">100自</option>
+                <option value="200自">200自</option>
+                <option value="75自">75自</option>
+                <option value="50自">50自</option>
+                <option value="200混">200混</option>
+                <option value="custom">自訂</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label for="mixTime${index}">含休</label>
+            <div class="mix-inline">
+              <input id="mixTime${index}" type="text" inputmode="numeric" placeholder="150" value="${escapeHtml(drafts[index]?.timeRaw || "")}">
+              <span class="mix-suffix">含休</span>
+            </div>
+          </div>
+          <div>
+            <label for="mixInterval${index}">出發間隔</label>
+            <div class="mix-inline">
+              <input id="mixInterval${index}" type="text" inputmode="numeric" placeholder="5" value="${escapeHtml(drafts[index]?.intervalRaw || "")}">
+              <span class="mix-suffix">秒出發</span>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      el("mixRows").querySelectorAll("[data-mix-group-index]").forEach((select) => {
+        select.addEventListener("change", () => {
+          renderMixRows();
+          if (state.entries.length) render();
+        });
+      });
+      el("mixRows").querySelectorAll("[data-mix-item-select]").forEach((select) => {
+        select.addEventListener("change", () => {
+          if (!select.value || select.value === "custom") return;
+          const input = el(`mixItem${select.dataset.mixItemSelect}`);
+          if (input) input.value = select.value;
+          if (state.entries.length) render();
+        });
+      });
+      el("mixRows").querySelectorAll("input").forEach((input) => {
+        input.addEventListener("change", () => {
+          if (state.entries.length) render();
+        });
+      });
+    }
+
+    ["mixedNo", "mixedYes", "mixCount"].forEach((id) => el(id).addEventListener("input", () => {
+      renderMixRows();
+      if (state.entries.length) render();
+    }));
+    el("defaultCourseGroup")?.addEventListener("change", () => {
+      renderMixRows();
+      if (state.entries.length) render();
+    });
+    el("sessionGroup")?.addEventListener("input", () => {
+      if (state.entries.length) render();
+    });
+    ["laneAStudents", "laneAWorkout", "laneBStudents", "laneBWorkout"].forEach((id) => {
+      el(id)?.addEventListener("input", saveLanePlanLocal);
+      el(id)?.addEventListener("change", saveLanePlanLocal);
+    });
+
+    el("closeDetailBtn").addEventListener("click", () => {
+      el("detailDialog").classList.remove("show");
+    });
+
+    el("detailDialog").addEventListener("click", (event) => {
+      if (event.target === el("detailDialog")) el("detailDialog").classList.remove("show");
+    });
+
+    el("fullscreenBtn")?.addEventListener("click", async () => {
+      try {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+        else await document.exitFullscreen();
+        setStatus("已切換全螢幕模式。", "good");
+      } catch {
+        setStatus("這個瀏覽器不允許全螢幕，仍可正常使用。", "bad");
+      }
+    });
+
+    el("focusInputBtn").addEventListener("click", runCommandPreview);
+
+    el("manualAddBtn").addEventListener("click", () => {
+      const name = el("manualName").value.trim();
+      const time = parseTime(el("manualTime").value.trim());
+      const action = el("manualAction").value;
+      if (!name || !time) {
+        setStatus("手動補記失敗：請確認姓名和時間碼。", "bad");
+        return;
+      }
+      addEntry(name, action, time, "手動補記", true, parseDeduct(el("manualTime").value.trim()));
+    });
+
+    el("resetBtn")?.addEventListener("click", () => {
+      if (!confirm("確定清空整理結果？左邊口令文字會保留。")) return;
+      state.entries = [];
+      state.issues = [];
+      state.summaryMetaOverrides = {};
+      render();
+      setStatus("已清空整理結果。");
+    });
+
+    // Char counter
+    const commandBox = el("commandBox");
+    const charCount = el("charCount");
+    if (commandBox && charCount) {
+      commandBox.addEventListener("input", () => {
+        charCount.textContent = `${commandBox.value.length} / 300`;
+        if (!parseState._suppressClear && (parseState.items.length || parseState.issues.length)) clearParsePreview();
+      });
+    }
+
+    // Wire focusResultBtn2
+    const frb2 = el("focusResultBtn2");
+    if (frb2) frb2.addEventListener("click", () => {
+      el("summaryTable").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    el("demoBtn")?.addEventListener("click", () => {
+      el("commandBox").value = "林立誠000出發，方瑞傑005出發，盧冠宇010出發，林立誠110回來，盧冠宇200回來，方瑞傑130回來，林立誠230出發，林立誠340回來，請整理";
+      parseAll();
+    });
+
+    el("copyBtn")?.addEventListener("click", async () => {
+      const text = summaryText();
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus("已複製表格文字。", "good");
+      } catch {
+        setStatus("複製失敗，請改用匯出 CSV。", "bad");
+      }
+    });
+
+    el("exportBtn")?.addEventListener("click", () => {
+      const csv = "\uFEFF" + summaryCsv();
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `游泳整理_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    el("focusResultBtn")?.addEventListener("click", () => {
+      el("summaryTable").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    el("parseToggleBtn")?.addEventListener("click", () => {
+      const box = el("parsePreview");
+      setParsePreviewCollapsed(!box?.classList.contains("collapsed"));
+    });
+    el("saveResultBtn")?.addEventListener("click", saveResultToDrive);
+    el("snapshotBtn").addEventListener("click", saveCurrentSnapshot);
+    el("uploadSnapshotsBtn").addEventListener("click", uploadSnapshotsToDrive);
+    el("uploadSummaryBtn").addEventListener("click", uploadSnapshotSummaryToDrive);
+    el("coachExcelBtn").addEventListener("click", downloadCoachExcel);
+    el("clearSnapshotsBtn").addEventListener("click", clearSnapshots);
+    settingsToggleBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      settingsPanel.hidden = !settingsPanel.hidden;
+    });
+    settingsPanel.addEventListener("click", (event) => {
+      event.stopPropagation();
+    });
+    document.addEventListener("click", () => {
+      settingsPanel.hidden = true;
+    });
+    // Theme picker
+    document.querySelectorAll(".theme-option[data-theme]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        applyTheme(btn.dataset.theme);
+        el("settingsPanel").hidden = true;
+      });
+    });
+
+    function saveCurrentSnapshot() {
+      if (!state.entries.length && el("commandBox").value.trim()) parseAll();
+      if (!state.entries.length) {
+        setStatus("目前沒有整理結果可以暫存。", "bad");
+        return;
+      }
+      const title = sessionGroupLabel() || `第${snapshots.length + 1}組`;
+      const plan = lanePlanPayload();
+      const snapshot = normalizeSnapshot({
+        title,
+        date: currentResultDate(),
+        commandText: el("commandBox").value,
+        createdAt: new Date().toISOString(),
+        entries: state.entries.map(cloneEntry),
+        issues: state.issues.slice(),
+        sessionGroup: el("sessionGroup")?.value || "",
+        summaryMetaOverrides: JSON.parse(JSON.stringify(state.summaryMetaOverrides || {})),
+        summaryTableRows: currentSummaryTableRows(),
+        lanes: {
+          A: { students: plan.laneAStudents, workout: plan.laneAWorkout },
+          B: { students: plan.laneBStudents, workout: plan.laneBWorkout },
+          C: { students: "", workout: "" },
+          D: { students: "", workout: "" },
+        },
+        assignments: {},
+      }, snapshots.length);
+      snapshots.push(snapshot);
+      saveSnapshotsLocal();
+      renderSnapshotList();
+      state.entries = [];
+      state.issues = [];
+      state.summaryMetaOverrides = {};
+      el("commandBox").value = "";
+      const charCount = el("charCount");
+      if (charCount) charCount.textContent = "0 / 300";
+      render();
+      setStatus(`已暫存 ${snapshot.title}，可以直接開始記錄下一組。`, "good");
+    }
+
+    function loadSnapshot(index) {
+      const snapshot = snapshots[index];
+      if (!snapshot) return;
+      state.entries = snapshot.entries.map(cloneEntry);
+      state.issues = snapshot.issues.slice();
+      state.summaryMetaOverrides = JSON.parse(JSON.stringify(snapshot.summaryMetaOverrides || {}));
+      el("commandBox").value = snapshot.commandText || "";
+      const titleMatch = String(snapshot.title || "").match(/\d+/);
+      if (el("sessionGroup")) el("sessionGroup").value = snapshot.sessionGroup || titleMatch?.[0] || "1";
+      if (el("resultDate")) el("resultDate").value = snapshot.date || new Date().toISOString().slice(0, 10);
+      const charCount = el("charCount");
+      if (charCount) charCount.textContent = `${el("commandBox").value.length} / 300`;
+      render();
+      setStatus(`已載入 ${snapshot.title} 到整理表。`, "good");
+    }
+
+    function deleteSnapshot(index) {
+      const snapshot = snapshots[index];
+      if (!snapshot) return;
+      if (!confirm(`確定刪除暫存「${snapshot.title}」？`)) return;
+      snapshots.splice(index, 1);
+      saveSnapshotsLocal();
+      renderSnapshotList();
+      setStatus("已刪除暫存。", "good");
+    }
+
+    function clearSnapshots() {
+      if (!snapshots.length) return;
+      if (!confirm("確定清空所有暫存紀錄？")) return;
+      snapshots = [];
+      saveSnapshotsLocal();
+      renderSnapshotList();
+      setStatus("已清空所有暫存紀錄。", "good");
+    }
+
+    function summaryRows(entries = state.entries) {
+      const headers = ["姓名"];
+      for (let i = 1; i <= maxTrips; i++) headers.push(`第${i}趟出發`, `第${i}趟回來`, `第${i}趟成績`, `第${i}趟個人排名`);
+      headers.push("完成趟數", "PB", "PB趟次", "最新", "進步秒數", "平均");
+      const rows = [headers];
+      for (const { name, trips } of grouped(entries)) {
+        const row = [name];
+        const results = trips.map((trip) => {
+          if (!trip.back) return null;
+          if (!trip.start && !(trip.back.deductSeconds || 0)) return null;
+          const backTotal = entryTotal(trip.back);
+          const startTotal = entryTotal(trip.start);
+          if (!Number.isFinite(backTotal) || (trip.start && !Number.isFinite(startTotal))) return null;
+          return trip.start ? backTotal - startTotal - (trip.back.deductSeconds || 0) : backTotal - (trip.back.deductSeconds || 0);
+        });
+        const valid = results.filter((v) => v !== null && v >= 0);
+        const personalRanks = personalRankMap(results);
+        const metrics = swimmerMetrics(trips);
+        trips.forEach((trip, i) => row.push(
+          trip.start?.time.label || "",
+          trip.back ? `${trip.back.time.label}${trip.back.deductSeconds ? ` 扣${trip.back.deductSeconds}秒` : ""}` : "",
+          fmt(results[i]),
+          personalRanks.get(i) ? `#${personalRanks.get(i)}` : ""
+        ));
+        row.push(
+          valid.length,
+          fmt(metrics.pb),
+          metrics.bestTrip,
+          fmt(metrics.latest),
+          metrics.improvement === "" ? "" : metrics.improvement,
+          fmt(valid.length ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : "")
+        );
+        rows.push(row);
+      }
+      return rows;
+    }
+
+    function tripResults(entries) {
+      return grouped(entries).map(({ name, trips }) => {
+        const results = trips.map((trip) => {
+          if (!trip.back) return null;
+          if (!trip.start && !(trip.back.deductSeconds || 0)) return null;
+          const backTotal = entryTotal(trip.back);
+          const startTotal = entryTotal(trip.start);
+          if (!Number.isFinite(backTotal) || (trip.start && !Number.isFinite(startTotal))) return null;
+          const seconds = trip.start
+            ? backTotal - startTotal - (trip.back.deductSeconds || 0)
+            : backTotal - (trip.back.deductSeconds || 0);
+          return seconds >= 0 ? seconds : null;
+        });
+        const valid = results.filter((value) => value !== null);
+        const metrics = swimmerMetrics(trips);
+        const avg = valid.length ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : "";
+        return { name, results, valid, metrics, avg };
+      });
+    }
+
+    function finalSummaryRows(entries = state.entries) {
+      const swimmers = tripResults(entries);
+      const visibleTrips = Math.max(0, ...swimmers.map((swimmer) => {
+        let last = 0;
+        swimmer.results.forEach((result, index) => {
+          if (result !== null) last = index + 1;
+        });
+        return last;
+      }));
+      const headers = ["姓名"];
+      for (let i = 1; i <= visibleTrips; i++) headers.push(`第${i}趟成績`);
+      headers.push("完成", "PB", "PB趟次", "最新", "進步", "平均");
+      const rows = [headers];
+      swimmers.forEach(({ name, results, valid, metrics, avg }) => {
+        const row = [name];
+        for (let i = 0; i < visibleTrips; i++) row.push(fmt(results[i]));
+        row.push(
+          valid.length,
+          fmt(metrics.pb),
+          metrics.bestTrip,
+          fmt(metrics.latest),
+          metrics.improvement === "" ? "" : `${metrics.improvement}秒`,
+          fmt(avg)
+        );
+        rows.push(row);
+      });
+      return rows;
+    }
+
+    function currentSummaryTableRows(entries = state.entries) {
+      const headers = ["組", "出發序", "課表組", "課表內容", "含休", "姓名"];
+      for (let i = 1; i <= maxTrips; i++) headers.push(`第${i}趟成績`);
+      headers.push("完成", "PB", "PB趟次", "最新", "進步", "平均");
+      const rows = [headers];
+      grouped(entries).forEach(({ name, trips }) => {
+        const meta = summaryMetaForName(name, entries);
+        const results = trips.map((trip) => {
+          if (!trip.back) return null;
+          if (!trip.start && !(trip.back.deductSeconds || 0)) return null;
+          const backTotal = entryTotal(trip.back);
+          const startTotal = entryTotal(trip.start);
+          if (!Number.isFinite(backTotal) || (trip.start && !Number.isFinite(startTotal))) return null;
+          return trip.start ? backTotal - startTotal - (trip.back.deductSeconds || 0) : backTotal - (trip.back.deductSeconds || 0);
+        });
+        const valid = results.filter((value) => value !== null && value >= 0);
+        const personalRanks = personalRankMap(results);
+        const intervalDiffs = courseIntervalDiffMap(trips, meta.time?.total);
+        const metrics = swimmerMetrics(trips);
+        const avg = valid.length ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : "";
+        const row = [
+          sessionGroupLabel(),
+          meta.personOrder,
+          courseGroupLetter(meta.courseGroup),
+          meta.item,
+          meta.timeRaw,
+          name,
+        ];
+        results.forEach((result, index) => {
+          if (result === null) {
+            row.push("");
+            return;
+          }
+          if (result < 0) {
+            row.push("回來早於出發");
+            return;
+          }
+          const rank = personalRanks.get(index);
+          const cycleDiff = intervalDiffs.get(index);
+          const cycleDiffLabel = Number.isFinite(cycleDiff) ? `${cycleDiff > 0 ? "+" : ""}${cycleDiff}秒` : "";
+          row.push([fmt(result), rank ? `#${rank}` : "", cycleDiffLabel].filter(Boolean).join(" "));
+        });
+        row.push(
+          valid.length,
+          fmt(metrics.pb),
+          metrics.bestTrip,
+          fmt(metrics.latest),
+          metrics.improvement === "" ? "" : (metrics.improvement > 0 ? `+${metrics.improvement}秒` : `${metrics.improvement}秒`),
+          fmt(avg)
+        );
+        rows.push(row);
+      });
+      return rows;
+    }
+
+    function enforceNameColumn(rows) {
+      if (!Array.isArray(rows) || !rows.length) return [["姓名"]];
+      const fixed = rows.map((row) => Array.isArray(row) ? row.slice() : [row]);
+      if (fixed[0][0] !== "姓名") fixed[0].unshift("姓名");
+      for (let i = 1; i < fixed.length; i++) {
+        if (!fixed[i].length) fixed[i].unshift("");
+      }
+      return fixed;
+    }
+
+    function resultRowsForSave(snapshot = null) {
+      if (snapshot) return snapshotFinalRows(snapshot);
+      const lanePlan = snapshot ? null : lanePlanPayload();
+      const lanes = snapshot?.lanes || {
+        A: { students: lanePlan.laneAStudents, workout: lanePlan.laneAWorkout },
+        B: { students: lanePlan.laneBStudents, workout: lanePlan.laneBWorkout },
+        C: { students: "", workout: "" },
+        D: { students: "", workout: "" },
+      };
+      const assignments = snapshot?.assignments || {};
+      const studentsByLane = {};
+      if (snapshot) {
+        ["A", "B", "C", "D"].forEach((lane) => {
+          studentsByLane[lane] = snapshotNames(snapshot)
+            .filter((name) => assignments[name] === lane)
+            .join("、");
+        });
+      }
+      const assignmentRows = snapshot
+        ? [["學生", "本組課表"], ...snapshotNames(snapshot).map((name) => [name, assignments[name] || "未標記"])]
+        : [];
+      return [
+        ["水道", "學生", "課表"],
+        ["A水道", studentsByLane.A || lanes.A?.students || "", lanes.A?.workout || ""],
+        ["B水道", studentsByLane.B || lanes.B?.students || "", lanes.B?.workout || ""],
+        ["C水道", studentsByLane.C || lanes.C?.students || "", lanes.C?.workout || ""],
+        ["D水道", studentsByLane.D || lanes.D?.students || "", lanes.D?.workout || ""],
+        [],
+        ...assignmentRows,
+        ...(assignmentRows.length ? [[]] : []),
+        ...summaryRows(snapshot?.entries || state.entries),
+      ];
+    }
+
+    function snapshotFinalRows(snapshot) {
+      const rows = [];
+      rows.push(["原始語音輸入文字"]);
+      rows.push([snapshot.commandText || ""]);
+      rows.push([]);
+      rows.push(["暫存整理表"]);
+      rows.push(...(snapshot.summaryTableRows?.length ? snapshot.summaryTableRows : currentSummaryTableRows(snapshot.entries || [])));
+      return rows;
+    }
+
+    function snapshotSummaryOnlyRows(snapshot) {
+      return snapshot.summaryTableRows?.length ? snapshot.summaryTableRows : currentSummaryTableRows(snapshot.entries || []);
+    }
+
+    function dailySummaryRows(fallbackDate) {
+      const rows = [];
+      for (const snapshot of snapshots) {
+        const summaryRows = snapshotSummaryOnlyRows(snapshot);
+        if (!summaryRows.length) continue;
+        rows.push([snapshot.date || fallbackDate, snapshot.title || "未命名組別"]);
+        rows.push(...summaryRows, [], []);
+      }
+      return rows;
+    }
+
+    async function saveResultToDrive() {
+      const date = currentResultDate();
+      const title = sessionGroupLabel();
+      const summary = summaryRows();
+      if (!date) {
+        setStatus("請先選擇日期。", "bad");
+        return;
+      }
+      if (!title) {
+        setStatus("請先確認第幾組。", "bad");
+        return;
+      }
+      if (summary.length <= 1) {
+        setStatus("目前沒有整理表資料可以儲存。", "bad");
+        return;
+      }
+      saveLanePlanLocal();
+      setStatus("正在儲存本組成績...", "good");
+      try {
+        const result = await sheetAction({ action: "saveResult", date, title, rows: resultRowsForSave() });
+        if (result && result.ok) setStatus(`已儲存到 ${date} 分頁：${title}`, "good");
+        else setStatus("儲存失敗：Apps Script 尚未支援本組成績寫入，請先部署新版 Apps Script。", "bad");
+      } catch {
+        setStatus("儲存失敗：請確認已部署新版游泳 Apps Script，且 API_URL 已換成新的 /exec。", "bad");
+      }
+    }
+
+    async function uploadSnapshotsToDrive() {
+      if (!snapshots.length) {
+        setStatus("目前沒有暫存紀錄可以上傳。", "bad");
+        return;
+      }
+      const fallbackDate = currentResultDate();
+      setStatus(`正在上傳 ${snapshots.length} 組暫存紀錄...`, "good");
+      try {
+        for (const snapshot of snapshots) {
+          const result = await sheetAction({
+            action: "saveResult",
+            date: snapshot.date || fallbackDate,
+            title: snapshot.title || "未命名組別",
+            rows: snapshotFinalRows(snapshot),
+          });
+          if (!result || !result.ok) throw new Error("save failed");
+        }
+        setStatus(`已上傳 ${snapshots.length} 組暫存紀錄。`, "good");
+      } catch {
+        setStatus("暫存上傳失敗：請確認網路與 Apps Script 權限。", "bad");
+      }
+    }
+
+    async function uploadSnapshotSummaryToDrive() {
+      if (!snapshots.length) {
+        setStatus("目前沒有暫存紀錄可以上傳總表。", "bad");
+        return;
+      }
+      const fallbackDate = currentResultDate();
+      const totalSheetName = `${fallbackDate}總表`;
+      setStatus(`正在上傳整理總表到 ${totalSheetName}...`, "good");
+      try {
+        const allRows = dailySummaryRows(fallbackDate);
+        if (!allRows.length) throw new Error("empty summary");
+        const result = await sheetAction({
+          action: "saveResult",
+          date: fallbackDate,
+          sheetName: totalSheetName,
+          overwrite: true,
+          title: `${fallbackDate} 整理總表`,
+          rows: allRows,
+        });
+        if (!result || !result.ok) throw new Error("save failed");
+        setStatus(`已上傳整理總表到 ${totalSheetName}。`, "good");
+      } catch {
+        setStatus("整理總表上傳失敗：請確認 Apps Script 已更新並重新部署。", "bad");
+      }
+    }
+
+    function downloadCoachExcel() {
+      if (!snapshots.length) {
+        setStatus("目前沒有暫存紀錄可以下載教練 Excel。", "bad");
+        return;
+      }
+      const fallbackDate = currentResultDate();
+      const rows = dailySummaryRows(fallbackDate);
+      if (!rows.length) {
+        setStatus("目前沒有暫存整理表可以下載。", "bad");
+        return;
+      }
+      const title = `${fallbackDate} 整理總表`;
+      const excelRows = [[title, new Date().toLocaleString("zh-TW")], ...rows];
+      const htmlRows = excelRows.map((row, rowIndex) => {
+        const cells = row.map((cell) => {
+          const tag = rowIndex === 0 || row[0] === "姓名" || String(row[0] || "").endsWith("組") ? "th" : "td";
+          return `<${tag}>${escapeHtml(cell)}</${tag}>`;
+        }).join("");
+        return `<tr>${cells}</tr>`;
+      }).join("");
+      const html = `<!doctype html><html><head><meta charset="utf-8">
+        <style>
+          table { border-collapse: collapse; font-family: "Microsoft JhengHei", Arial, sans-serif; }
+          th, td { border: 1px solid #d9d9d9; padding: 6px 9px; white-space: nowrap; }
+          th { background: #f3f6f8; font-weight: 700; }
+        </style></head><body><table>${htmlRows}</table></body></html>`;
+      const blob = new Blob(["\uFEFF", html], { type: "application/vnd.ms-excel;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${fallbackDate}_游泳整理總表.xls`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      setStatus(`已下載 ${fallbackDate}_游泳整理總表.xls。`, "good");
+    }
+
+    function summaryText() {
+      return grouped().map(({ name, trips }) => {
+        const parts = trips.map((trip, i) => {
+          let result = null;
+          if (trip.back && (trip.start || (trip.back.deductSeconds || 0))) {
+            const backTotal = entryTotal(trip.back);
+            const startTotal = entryTotal(trip.start);
+            if (Number.isFinite(backTotal) && (!trip.start || Number.isFinite(startTotal))) {
+              result = trip.start ? backTotal - startTotal - (trip.back.deductSeconds || 0) : backTotal - (trip.back.deductSeconds || 0);
+            }
+          }
+          return `第${i + 1}趟 ${trip.start ? trip.start.time.label : ""} / ${trip.back ? `${trip.back.time.label}${trip.back.deductSeconds ? `扣${trip.back.deductSeconds}秒` : ""}` : ""} / ${fmt(result)}`;
+        });
+        return `${name}\t${parts.join("\t")}`;
+      }).join("\n");
+    }
+
+    function summaryCsv() {
+      const rows = summaryRows();
+      return rows.map((row) => row.map((cell) => `"${String(cell ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    }
+
+    applyTheme(localStorage.getItem("swimTimerTheme") || "splash");
+    setupStudentAliasUi();
+    setupStudentSettingsCard();
+    loadLanePlanLocal();
+    loadSnapshotsLocal();
+    if (el("resultDate") && !el("resultDate").value) el("resultDate").value = new Date().toISOString().slice(0, 10);
+    render();
+    renderSnapshotList();
+    renderMixRows();
+    loadSettings();
+  </script>
+</body>
+</html>
